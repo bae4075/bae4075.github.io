@@ -423,8 +423,9 @@ PHP＜&#x3D;7.4.21 Development Server源码泄露漏洞 例题_php7.4漏洞-CSDN
                         
                             
                             
-phar反序列化注意：要将php.ini中的phar.readonly选项设置为Off，否则无法生成phar文件
-&#x2F;&#x2F;phar的使用格式
+phar 反序列化
+注意：要将 php.ini 中的 phar.readonly 选项设置为 Off，否则无法生成 phar 文件
+//phar 的使用格式
 startBuffering();
 $phar->setStub(''); //设置stub,我们必须以这个为结尾,否则phar扩展将无法识别这个文件为phar文件
 
