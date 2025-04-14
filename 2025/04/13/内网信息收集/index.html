@@ -13,7 +13,7 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="http://example.com/2025/03/16/kali/"/>
+    <link rel="canonical" href="http://example.com/2025/04/13/内网信息收集/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
@@ -23,14 +23,14 @@
         
         <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="kali">
-<meta property="og:url" content="http://example.com/2025/03/16/kali/index.html">
+<meta property="og:title" content="内网信息收集">
+<meta property="og:url" content="http://example.com/2025/04/13/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/index.html">
 <meta property="og:site_name" content="Bae">
 <meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/images/redefine-og.webp">
-<meta property="article:published_time" content="2025-03-16T08:13:33.000Z">
-<meta property="article:modified_time" content="2025-03-16T08:15:51.622Z">
+<meta property="article:published_time" content="2025-04-13T07:36:56.000Z">
+<meta property="article:modified_time" content="2025-04-13T08:03:40.903Z">
 <meta property="article:author" content="Bae">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/images/redefine-og.webp">
@@ -45,7 +45,7 @@
     
     <title>
         
-            kali | Theme Redefine
+            内网信息收集 | Theme Redefine
         
     </title>
 
@@ -234,7 +234,7 @@
 		<div class="article-title relative w-full">
 			
 			<div class="w-full flex items-center pt-6 justify-start">
-				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">kali</h1>
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">内网信息收集</h1>
 			</div>
 			
 		</div>
@@ -255,15 +255,15 @@
 					<div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fa-regular fa-pen-fancy"></i>&nbsp;
-        <span class="desktop">2025-03-16 16:13:33</span>
-        <span class="mobile">2025-03-16 16:13:33</span>
+        <span class="desktop">2025-04-13 15:36:56</span>
+        <span class="mobile">2025-04-13 15:36:56</span>
         <span class="hover-info">创建</span>
     </span>
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2025-03-16 16:15:51</span>
-            <span class="mobile">2025-03-16 16:15:51</span>
+            <span class="desktop">2025-04-13 16:03:40</span>
+            <span class="mobile">2025-04-13 16:03:40</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -290,14 +290,85 @@
 
 
 		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
-			<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://cdn.jsdelivr.net/gh/bae4075/Noteimage@img/img/image-20250316161351276.png"
-                      alt="image-20250316161351276"
-                ></p>
-<p>图片隐写工具，zsteg</p>
-<p>先直接后面加文件名，之后如图那样，把第三行复制前面那些，-E   最后面新建一个 png</p>
+			<p>渗透测试人员进人内网后，面对的是一片“黑暗森林”。所以，渗透测试人员首先需要对当前所处的网络环境进行判断。判断涉及如下三个方面。</p>
+<p>我是谁   这是哪  我在哪</p>
+<p>首先对机器角色进行判断，看当前服务器是普通web服务器、开发测试服务器、公共服务器、文件服务器、代理服务器、DNS服务器还是存储服务器等。具体的判断过程，是根据机器的主机名、文件、网络连接等情况综合完成的。</p>
+<p>对当前机器所处网络环境的拓扑结构进行分析和判断，是指对所处内网进行全面的数据收集和分析整理，绘制出大致的内网整体拓扑结构图。</p>
+<p>对当前机器所处区域的判断，是指判断机器处于网络拓扑中的哪个区域，是在DMZ、办公区还是核心区。当然，这里的区域不是绝对的，只是一个大概的环境。处于不同位置的网络，环境不一样，区域界限也不一定明显。</p>
+<h2 id="收集本机信息"><a href="#收集本机信息" class="headerlink" title="收集本机信息"></a>收集本机信息</h2><p>本机信息包括操作系统、权限、内网IP地址段、杀毒软件、端口、服务、补丁更新频率、网络连接、共享、会话等。如果是域内主机，操作系统、应用软件、补丁、服务、杀毒软件一般都是批量安装的。</p>
+<h4 id="1-1、查询网络配置信息"><a href="#1-1、查询网络配置信息" class="headerlink" title="1.1、查询网络配置信息"></a>1.1、查询网络配置信息</h4><p>ipconfig &#x2F;all</p>
+<h4 id="1-2、查询操作系统和版本信息"><a href="#1-2、查询操作系统和版本信息" class="headerlink" title="1.2、查询操作系统和版本信息"></a>1.2、查询操作系统和版本信息</h4><p><strong>查询操作系统和版本信息</strong></p>
+<p>systeminfo | findstr &#x2F;B &#x2F;C:”OS Name” &#x2F;C:”OS Version”</p>
+<p><strong>查看系统体系结构</strong></p>
+<p>echo %PROCESSOR_ARCHITECTURE%</p>
+<p><strong>查看安装的软件及版本、路径等</strong>****</p>
+<p>wmic product get name,version</p>
+<h4 id="1-3、查询本机服务信息"><a href="#1-3、查询本机服务信息" class="headerlink" title="1.3、查询本机服务信息"></a>1.3、查询本机服务信息</h4><p>wmic service list brief</p>
+<h4 id="1-4、查询进程列表"><a href="#1-4、查询进程列表" class="headerlink" title="1.4、查询进程列表"></a>1.4、查询进程列表</h4><p>执行如下命令，可以查看当前进程列表和进程用户，分析软件、邮件客户端、VPN和杀毒软件等进程。</p>
+<p>tasklist</p>
+<p>执行如下命令，查看进程信息</p>
+<p>wmic process list brief</p>
+<p>常见的杀毒软件的进程</p>
+<p>进程	软件名称<br>360sd.exe	360杀毒<br>360tray.exe	360实时保护<br>ZhuDongFangYu.exe	360主动防御<br>KSafeTray.exe	金山卫士<br>SafeDogUpdateCenter.exe	服务器安全狗<br>McAfee McShield.exe	McAfee<br>egui.exe	NOD32<br>AVP.EXE	卡巴斯基<br>avguard.exe	小红伞<br>bdagent.exe	BitDefender</p>
+<h4 id="1-5、查看启动程序信息"><a href="#1-5、查看启动程序信息" class="headerlink" title="1.5、查看启动程序信息"></a>1.5、查看启动程序信息</h4><p>wmic startup get command,caption</p>
+<h4 id="1-6、查看计划任务"><a href="#1-6、查看计划任务" class="headerlink" title="1.6、查看计划任务"></a>1.6、查看计划任务</h4><p>schtasks &#x2F;query &#x2F;fo LIST &#x2F;v</p>
+<h4 id="1-7、查看主机开机时间"><a href="#1-7、查看主机开机时间" class="headerlink" title="1.7、查看主机开机时间"></a>1.7、查看主机开机时间</h4><p>net statistics workstation</p>
+<h4 id="1-8、查询用户列表"><a href="#1-8、查询用户列表" class="headerlink" title="1.8、查询用户列表"></a>1.8、查询用户列表</h4><p>net user</p>
+<p>执行如下命令，获取本地管理员（通常包含域用户）信息。</p>
+<p>net localgroup administrators</p>
+<p>执行如下命令，查看当前在线用户</p>
+<p>query user || qwinsta</p>
+<h4 id="1-9、列出或断开本地计算机与所连接的客户端之间的会话"><a href="#1-9、列出或断开本地计算机与所连接的客户端之间的会话" class="headerlink" title="1.9、列出或断开本地计算机与所连接的客户端之间的会话"></a>1.9、列出或断开本地计算机与所连接的客户端之间的会话</h4><p>net session</p>
+<h4 id="1-10、查询端口列表"><a href="#1-10、查询端口列表" class="headerlink" title="1.10、查询端口列表"></a>1.10、查询端口列表</h4><p>netstat -ano</p>
+<h4 id="1-11、查看补丁列表"><a href="#1-11、查看补丁列表" class="headerlink" title="1.11、查看补丁列表"></a>1.11、查看补丁列表</h4><p>systeminfo</p>
+<h4 id="1-12、查询本机共享列表"><a href="#1-12、查询本机共享列表" class="headerlink" title="1.12、查询本机共享列表"></a>1.12、查询本机共享列表</h4><p>net share</p>
+<h4 id="1-13、查询路由表及所有可用接口的APP缓存表"><a href="#1-13、查询路由表及所有可用接口的APP缓存表" class="headerlink" title="1.13、查询路由表及所有可用接口的APP缓存表"></a>1.13、查询路由表及所有可用接口的APP缓存表</h4><p>route print<br>arp -a</p>
+<h4 id="1-14、查询防火墙相关配置"><a href="#1-14、查询防火墙相关配置" class="headerlink" title="1.14、查询防火墙相关配置"></a>1.14、查询防火墙相关配置</h4><p>( 1 ) 关闭防火墙<br>Windows Server 2003及之前的版本，命令如下</p>
+<p>netsh firewall set opmode disable<br>Windows Server 2003之后的版本，命令如下</p>
+<p>netsh advfirewall set allprofiles state off<br>( 2 ) 查看防火墙配置</p>
+<p>netsh firewall show config<br>( 3 ) 修改防火墙配置<br>Windows Server 2003及之前的版本，允许指定程序全部连接，命令如下</p>
+<p>netsh firewall add allowedprogram C:\nc.exe “allow nc” enable<br>Windows Server 2003之后的版本，情况如下<br>允许指定程序进入，命令如下</p>
+<p>netsh advfirewall firewall add rule name&#x3D;”pass nc” dir&#x3D;in action&#x3D;allow program&#x3D;”C: \nc.exe”<br>允许指定程序退出，命令如下</p>
+<p>netsh advfirewall firewall add rule name&#x3D;”Allow nc” dir&#x3D;out action&#x3D;allow program&#x3D;”C: \nc.exe”<br>允许3389端口放行，命令如下。</p>
+<p>netsh advfirewall firewall add rule name&#x3D;”Remote Desktop” protocol&#x3D;TCP dir&#x3D;in localport&#x3D;3389 action&#x3D;allow<br>( 4 ) 自定义防火墙日志的储存位置</p>
+<p>netsh advfirewall set currentprofile logging filename “C:\windows\temp\fw.log</p>
+<h4 id="1-15、查看代理配置情况"><a href="#1-15、查看代理配置情况" class="headerlink" title="1.15、查看代理配置情况"></a>1.15、查看代理配置情况</h4><p>reg query “HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings”</p>
+<h4 id="1-16、查询并开启远程连接服务"><a href="#1-16、查询并开启远程连接服务" class="headerlink" title="1.16、查询并开启远程连接服务"></a>1.16、查询并开启远程连接服务</h4><p><strong>( 1 ) 查看远程连接端口</strong><br>在命令行环境中执行注册表查询语句，命令如下。连接的端口为0xd3d,转换后为3389。</p>
+<p>REG QUERY “HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp” &#x2F;V PortNumber</p>
+<p>( 2 ) 在Windows Server 2003中开启3389端口</p>
+<p>wmic path win32_ terminalservicesetting where (__CLASS !&#x3D;””) call setallowtsconnections </p>
+<p>( 3 ) 在Windows Server 2008和Windows Server 2012中开启3389端口</p>
+<p>wmic &#x2F;namespace:\root\cimv2\terminalservices path win32_terminalservicesetting where (__CLASS !&#x3D;””) call setallowtsconnections </p>
+<p>wmic &#x2F;namespace:\root\cimv2\terminalservices path win32_tsgeneralsetting where (TerminalName&#x3D;’RDP-Tcp’) call setuserauthenticationrequired 1</p>
+<p>reg add “HKLM\SYSTEM\CURRENT\CONTROLSET\CONTROL\TERMINAL SERVER” &#x2F;v fSingleSessionPerUser &#x2F;t REG_ DWORD &#x2F;d 0 &#x2F;f</p>
+<p>还可以用vmic命令[b]1格式化文件，特别是xsl格式，这个我没试过，大家有兴趣可以试试，[&#x2F;b]</p>
+<div class="code-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wmic /output:c:\process.html process list /format:htable.xsl</span><br></pre></td></tr></table></figure></div>
+
+
+
+<p>[b]2进程管理[&#x2F;b]</p>
+<div class="code-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#列出进程的核心信息,有点像任务管理器wmic process list brief#新建calc进程wmic process call create calc#列出进程的信息，这个命令可以借助管道就可以找到你想要的进程启动参数，如 | find <span class="string">&quot;tomcat&quot;</span>wmic process get caption,handle,commandline,executablepath#结束进程 handle是文件句柄，接触过c++变成的比较了解wmic process [handle/PID] deletewmic process [handle/PID] call terminate</span><br></pre></td></tr></table></figure></div>
+
+
+
+<p>[b]3 bios管理[&#x2F;b]</p>
+<div class="code-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wmic bios get name,SMBIOSBIOSVersion,manufacturer</span><br></pre></td></tr></table></figure></div>
+
+
+
+<p>[b]4 系统管理[&#x2F;b]</p>
+<div class="code-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#查看硬件、操作系统基本信息wmic computersystem get Name,workgroup,NumberOfProcessors,manufacturer,Model#查看系统启动选项boot.ini的内容wmic computersystem get SystemStartupOptions#查看工作组/域wmic computersystem get domain#更改计算机名abc为123wmic computersystem where <span class="string">&quot;name=&#x27;nonobaba&#x27;&quot;</span> call rename skyhits#更改工作组google为MyGroupwmic computersystem where <span class="string">&quot;name=&#x27;wodsy&#x27;&quot;</span> call joindomainorworkgroup <span class="string">&quot;&quot;</span>,<span class="string">&quot;&quot;</span>,<span class="string">&quot;MyGroup&quot;</span>,<span class="number">1</span></span><br></pre></td></tr></table></figure></div>
+
+
+
+
+<p>[b]5 文件管理[&#x2F;b]</p>
+<div class="code-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#查找e盘下test目录(不包括子目录)下的cc.cmd文件wmic datafile where <span class="string">&quot;drive=&#x27;e:&#x27; and path=&#x27;\\test\\&#x27; and FileName=&#x27;cc&#x27; and Extension=&#x27;cmd&#x27;&quot;</span> list#查找e盘下所有目录和子目录下的cc.cmd文件,且文件大小大于1Kwmic datafile where <span class="string">&quot;drive=&#x27;e:&#x27; and FileName=&#x27;cc&#x27; and Extension=&#x27;cmd&#x27; and FileSize&gt;&#x27;1000&#x27;&quot;</span> list#删除e盘下文件大小大于10M的.cmd文件wmic datafile where <span class="string">&quot;drive=&#x27;e:&#x27; and Extension=&#x27;cmd&#x27; and FileSize&gt;&#x27;10000000&#x27;&quot;</span> call delete#删除e盘下test目录(不包括子目录)下的非.cmd文件wmic datafile where <span class="string">&quot;drive=&#x27;e:&#x27; and Extension&lt;&gt;&#x27;cmd&#x27; and path=&#x27;test&#x27;&quot;</span> call delete#复制e盘下test目录(不包括子目录)下的cc.cmd文件到e:\,并改名为aa.batwmic datafile where <span class="string">&quot;drive=&#x27;e:&#x27; and path=&#x27;\\test\\&#x27; and FileName=&#x27;cc&#x27; and Extension=&#x27;cmd&#x27;&quot;</span> call copy <span class="string">&quot;e:\aa.bat&quot;</span>::改名c:\hello.txt为c:\test.txtwmic datafile <span class="string">&quot;c:\\hello.txt&quot;</span> call rename c:\test.txt#查找h盘下目录含有test,文件名含有perl,后缀为txt的文件wmic datafile where <span class="string">&quot;drive=&#x27;h:&#x27; and extension=&#x27;txt&#x27; and path like &#x27;%\\test\\%&#x27; and filename like &#x27;%perl%&#x27;&quot;</span> get name</span><br></pre></td></tr></table></figure></div>
+
+
+
+<p>[b]6系统管理[&#x2F;b]</p>
+<div class="code-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#获取temp环境变量wmic ENVIRONMENT where <span class="string">&quot;name=&#x27;temp&#x27;&quot;</span> get UserName,VariableValue#更改path环境变量值,新增e:\toolswmic ENVIRONMENT where <span class="string">&quot;name=&#x27;path&#x27; and username=&#x27;&lt;system&gt;&#x27;&quot;</span> set VariableValue=<span class="string">&quot;%path%;e:\tools&quot;</span>#新增系统环境变量home,值为%HOMEDRIVE%%HOMEPATH%wmic ENVIRONMENT create name=<span class="string">&quot;home&quot;</span>,username=<span class="string">&quot;&lt;system&gt;&quot;</span>,VariableValue=<span class="string">&quot;%HOMEDRIVE%%HOMEPATH%&quot;</span>#删除home环境变量wmic ENVIRONMENT where <span class="string">&quot;name=&#x27;home&#x27;&quot;</span> delete</span><br></pre></td></tr></table></figure></div>
 
 		</div>
 
@@ -305,18 +376,18 @@
 		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
 			<div class="article-copyright-info-container">
     <ul>
-        <li><strong>标题:</strong> kali</li>
+        <li><strong>标题:</strong> 内网信息收集</li>
         <li><strong>作者:</strong> The Redefine Team</li>
         <li><strong>创建于
-                :</strong> 2025-03-16 16:13:33</li>
+                :</strong> 2025-04-13 15:36:56</li>
         
             <li>
                 <strong>更新于
-                    :</strong> 2025-03-16 16:15:51
+                    :</strong> 2025-04-13 16:03:40
             </li>
         
         <li>
-            <strong>链接:</strong> https://redefine.ohevan.com/2025/03/16/kali/
+            <strong>链接:</strong> https://redefine.ohevan.com/2025/04/13/内网信息收集/
         </li>
         <li>
             <strong>
@@ -341,23 +412,11 @@
 		
 		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
 			
-			<div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
-				<a class="prev" rel="prev" href="/2025/04/13/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/">
-					<span class="left arrow-icon flex justify-center items-center">
-						<i class="fa-solid fa-chevron-left"></i>
-					</span>
-					<span class="title flex justify-center items-center">
-						<span class="post-nav-title-item">内网信息收集</span>
-						<span class="post-nav-item">上一篇</span>
-					</span>
-				</a>
-			</div>
-			
 			
 			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
-				<a class="next" rel="next" href="/2025/03/09/sql%E6%B3%A8%E5%85%A5/">
+				<a class="next" rel="next" href="/2025/03/16/kali/">
 					<span class="title flex justify-center items-center">
-						<span class="post-nav-title-item">sql注入</span>
+						<span class="post-nav-title-item">kali</span>
 						<span class="post-nav-item">下一篇</span>
 					</span>
 					<span class="right arrow-icon flex justify-center items-center">
@@ -421,8 +480,8 @@
 		<div class="post-toc-wrap">
 	<div class="post-toc">
 		<div class="toc-title">目录</div>
-		<div class="page-title">kali</div>
-		
+		<div class="page-title">内网信息收集</div>
+		<ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%B6%E9%9B%86%E6%9C%AC%E6%9C%BA%E4%BF%A1%E6%81%AF"><span class="nav-text">收集本机信息</span></a></li></ol>
 
 	</div>
 </div>
